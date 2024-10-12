@@ -1,0 +1,81 @@
+.success-container, .cancel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  background-color: #f0f0f0;
+}
+
+.success-card, .cancel-card {
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.card-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  opacity: 0.1;
+}
+
+.decoration-success {
+}
+
+.decoration-cancel {
+}
+
+.success-title, .cancel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #C60B1E;
+  margin-bottom: 20px;
+}
+
+.success-message, .cancel-message {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.success-icon, .cancel-icon {
+  font-size: 48px;
+  height: 48px;
+  width: 48px;
+  margin-bottom: 20px;
+}
+
+.success-icon {
+  color: #4CAF50;
+}
+
+.cancel-icon {
+  color: #F44336;
+}
+
+.return-btn, .retry-btn {
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.return-btn:hover, .retry-btn:hover {
+  transform: scale(1.05);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

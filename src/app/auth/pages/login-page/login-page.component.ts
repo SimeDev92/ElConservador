@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -24,19 +24,29 @@ export class LoginPageComponent {
     if (this.myForm.invalid) return;
 
     const { email, password } = this.myForm.value;
-    this.authService.login(email, password)
-      .subscribe({
-        next: () => this.router.navigateByUrl('/dashboard'),
-        error: (message) => {
-          Swal.fire({
-            title: 'Error',
-            text: message,
-            icon: 'error',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#007BFF',
+    this.authService.login(email, password).subscribe({
+      next: (success) => {
+        if (success) {
+          const redirectUrl = this.authService.getRedirectUrl();
+          console.log('LoginComponent: Redirecting to:', redirectUrl);
+          this.authService.clearRedirectUrl();
+          this.router.navigateByUrl(redirectUrl).then(() => {
+            console.log('Navigation complete');
+          }).catch(error => {
+            console.error('Navigation failed:', error);
           });
         }
-      })
+      },
+      error: (message) => {
+        Swal.fire({
+          title: 'Error',
+          text: message,
+          icon: 'error',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#007BFF',
+        });
+      }
+    });
   }
 
   loginWithGoogle() {

@@ -1,100 +1,139 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { loadStripe } from '@stripe/stripe-js';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { environments } from '../../environments/environments';
+import { DonationsService } from './donations.service';
+import { AuthService } from '../auth/services/auth.service';
+import { AuthStatus } from '../auth/interfaces';
 
 @Component({
   selector: 'app-donations',
   templateUrl: './donations.component.html',
   styleUrls: ['./donations.component.css']
 })
-export class DonationsComponent {
-  private stripePromise = loadStripe('tu_stripe_public_key'); // Reemplaza con tu clave pública de Stripe
-  donationType: string = 'single'; // Tipo de donación (única o mensual)
-  selectedAmount: number | null = null; // Monto seleccionado
-  singleDonationAmounts = [1, 5, 10, 20, 50, 100]; // Opciones para donaciones únicas
-  monthlyDonationAmounts = [5, 10, 20, 50]; // Opciones para donaciones mensuales
+export class DonationsComponent implements OnInit {
+  isAuthenticated: boolean = false;
+  donationType: string = 'single';
+  selectedAmount: number | null = null;
+  singleDonationAmounts = [1, 5, 10, 20, 50, 100];
+  monthlyDonationAmounts = [5, 10, 20, 50];
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private donationsService: DonationsService
+  ) {}
 
-  // Procesar la donación única
+  ngOnInit() {
+    this.isAuthenticated = this.authService.authStatus() === AuthStatus.authenticated;
+  }
+
+  processDonation(isRecurring: boolean) {
+    if (this.authService.authStatus() !== AuthStatus.authenticated) {
+      this.authService.setRedirectUrl('/donations');
+      this.router.navigateByUrl('/auth/login');
+      return;
+    }
+
+    if (this.selectedAmount === null) {
+      Swal.fire({
+        title: 'Error',
+        text: `Por favor, selecciona un monto de donación ${isRecurring ? 'mensual' : 'única'}.`,
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007BFF',
+      });
+      return;
+    }
+
+    const priceId = this.getPriceIdForAmount(this.selectedAmount, isRecurring ? 'monthly' : 'single');
+    if (!priceId) {
+      Swal.fire({
+        title: 'Error',
+        text: 'El monto seleccionado no es válido.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007BFF',
+      });
+      return;
+    }
+
+    this.donationsService.createCheckoutSession(priceId, isRecurring).pipe(
+      switchMap(response => this.donationsService.redirectToCheckout(response.sessionId))
+    ).subscribe(
+      (result) => {
+        if (result && result.error) {
+          console.error('Error during checkout:', result.error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#007BFF',
+          });
+        }
+        // Si no hay error, el usuario ha sido redirigido a Stripe
+      },
+      (error) => {
+        console.error('Error initiating checkout:', error);
+        Swal.fire({
+          title: 'Error',
+          text: 'Hubo un problema al crear la sesión de pago. Por favor, inténtalo de nuevo más tarde.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#007BFF',
+        });
+      }
+    );
+  }
+
   async processSingleDonation() {
-    if (!this.selectedAmount) {
-      alert('Por favor, selecciona un monto de donación.');
-      return;
-    }
-
-    const priceId = this.getPriceIdForAmount(this.selectedAmount, 'single');
-    if (!priceId) {
-      alert('El monto seleccionado no es válido.');
-      return;
-    }
-
-    // Llamada al backend para crear la sesión de pago en Stripe
-    this.http.post<any>('http://localhost:3000/payments/create-checkout-session', { priceId })
-      .subscribe(async (response) => {
-        const stripe = await this.stripePromise;
-        // Redirige al usuario a la página de pago de Stripe
-        stripe?.redirectToCheckout({ sessionId: response.sessionId });
-      }, error => {
-        console.error('Error al crear la sesión de pago:', error);
-      });
+    await this.processDonation(false);
   }
 
-  // Procesar la donación mensual
   async processMonthlyDonation() {
-    if (!this.selectedAmount) {
-      alert('Por favor, selecciona un monto de donación mensual.');
-      return;
-    }
-
-    const priceId = this.getPriceIdForAmount(this.selectedAmount, 'monthly');
-    if (!priceId) {
-      alert('El monto seleccionado no es válido.');
-      return;
-    }
-
-    // Llamada al backend para crear la sesión de pago en Stripe
-    this.http.post<any>('http://localhost:3000/payments/create-checkout-session', { priceId })
-      .subscribe(async (response) => {
-        const stripe = await this.stripePromise;
-        // Redirige al usuario a la página de pago de Stripe
-        stripe?.redirectToCheckout({ sessionId: response.sessionId });
-      }, error => {
-        console.error('Error al crear la sesión de pago:', error);
-      });
+    await this.processDonation(true);
   }
 
-  // Obtiene el priceId según el monto seleccionado y el tipo de donación
   private getPriceIdForAmount(amount: number, type: 'single' | 'monthly'): string | null {
-    // Mapeo de los priceIds correspondientes para las donaciones únicas y mensuales
-    const priceMapping: { [key: string]: { [key: number]: string } } = {
+    const testPriceMapping = {
       single: {
-        1: 'price_id_1', // Reemplaza con los priceIds de Stripe
-        5: 'price_id_5',
-        10: 'price_id_10',
-        20: 'price_id_20',
-        50: 'price_id_50',
-        100: 'price_id_100',
+        1:   'price_1Q8mjnDZG49tH5nmNFHqTipQ',
+        5:   'price_1Q8mlKDZG49tH5nm0pNvz9AS',
+        10:  'price_1Q8mljDZG49tH5nmq6wf8RjB',
+        20:  'price_1Q8mpVDZG49tH5nmvBwli4QP',
+        50:  'price_1Q8mptDZG49tH5nmis73ROoV',
+        100: 'price_1Q8mtIDZG49tH5nmJiHjxrDZ',
       },
       monthly: {
-        5: 'price_id_monthly_5',
-        10: 'price_id_monthly_10',
-        20: 'price_id_monthly_20',
-        50: 'price_id_monthly_50',
+        5:  'price_1Q8mu5DZG49tH5nmWVzvvraZ',
+        10: 'price_1Q8mugDZG49tH5nmfiAR2cGq',
+        20: 'price_1Q8muzDZG49tH5nmXkkDMnqt',
+        50: 'price_1Q8mvKDZG49tH5nmfv1QfGRm',
       },
     };
 
-    if (priceMapping[type] && priceMapping[type][amount] !== undefined) {
-      return priceMapping[type][amount];
-    }
+    const productionPriceMapping = {
+      single: {
+        1:   'prod_R0maryEnpbavyW',
+        5:   'prod_R0motzuCHMGDoN',
+        10:  'prod_R0mp9ic6y1Z3i1',
+        20:  'prod_R0mqYtmEZVGjkz',
+        50:  'prod_R0mrpYgRgvzS67',
+        100: 'prod_R0ms4bbEgwCnKe',
+      },
+      monthly: {
+        5:  'prod_R0mwgStTFFivtv',
+        10: 'price_1Q8lTXDZG49tH5nmXxI6MLyo',
+        20: 'prod_R0n4EJHptIxcvl',
+        50: 'prod_R0n5OrlkIgQDEL',
+      },
+    };
 
-    // Si no existe, retorna null
-    return null;
-  }
+    const priceMapping = environments.useTestProducts ? testPriceMapping : productionPriceMapping;
+    const selectedMapping = priceMapping[type] as { [key: number]: string };
 
-  // Método para abrir enlaces externos
-  openExternalLink(url: string): void {
-    window.open(url, '_blank');
+    return selectedMapping[amount] || null;
   }
 }

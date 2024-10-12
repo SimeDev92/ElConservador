@@ -24,22 +24,20 @@ export class AppComponent {
   })
 
   public authStatusChangedEffect = effect (() => {
+    console.log('Auth status changed:', this.authService.authStatus());
 
-    switch( this.authService.authStatus() ){
-
+    switch (this.authService.authStatus()) {
       case AuthStatus.cheking:
         return;
       case AuthStatus.authenticated:
-        this.router.navigateByUrl('/dashboard');
         return;
       case AuthStatus.notAuthenticated:
-        this.router.navigateByUrl('/news/list'); // '/news/list' /auth/login'
+        this.router.navigateByUrl('/news/list');
         return;
-        case AuthStatus.registered:
-          this.router.navigateByUrl('/auth/login');
-          return;
+      case AuthStatus.registered:
+        this.router.navigateByUrl('/auth/login');
+        return;
     }
-
 
   })
 
