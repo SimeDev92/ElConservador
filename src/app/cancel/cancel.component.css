@@ -24,13 +24,13 @@
   opacity: 0.1;
 }
 
-.decoration-success {
+/* .decoration-success {
   background: url('path-to-your-success-pattern.jpg') repeat;
 }
 
 .decoration-cancel {
   background: url('path-to-your-cancel-pattern.jpg') repeat;
-}
+} */
 
 .success-title, .cancel-title {
   font-family: 'Playfair Display', serif;

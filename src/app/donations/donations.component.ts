@@ -6,6 +6,7 @@ import { environments } from '../../environments/environments';
 import { DonationsService } from './donations.service';
 import { AuthService } from '../auth/services/auth.service';
 import { AuthStatus } from '../auth/interfaces';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-donations',
@@ -30,70 +31,52 @@ export class DonationsComponent implements OnInit {
   }
 
   processDonation(isRecurring: boolean) {
-    if (this.authService.authStatus() !== AuthStatus.authenticated) {
+    if (!this.isAuthenticated) {
       this.authService.setRedirectUrl('/donations');
       this.router.navigateByUrl('/auth/login');
       return;
     }
 
     if (this.selectedAmount === null) {
-      Swal.fire({
-        title: 'Error',
-        text: `Por favor, selecciona un monto de donación ${isRecurring ? 'mensual' : 'única'}.`,
-        icon: 'error',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#007BFF',
-      });
+      this.showError(`Por favor, selecciona un monto de donación ${isRecurring ? 'mensual' : 'única'}.`);
       return;
     }
 
     const priceId = this.getPriceIdForAmount(this.selectedAmount, isRecurring ? 'monthly' : 'single');
     if (!priceId) {
-      Swal.fire({
-        title: 'Error',
-        text: 'El monto seleccionado no es válido.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-        confirmButtonColor: '#007BFF',
-      });
+      this.showError('El monto seleccionado no es válido.');
       return;
     }
 
-    this.donationsService.createCheckoutSession(priceId, isRecurring).pipe(
-      switchMap(response => this.donationsService.redirectToCheckout(response.sessionId))
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      this.showError('No se pudo identificar al usuario. Por favor, inicia sesión nuevamente.');
+      return;
+    }
+
+    this.donationsService.createCheckoutSession(priceId, isRecurring, userId).pipe(
+      switchMap(response => this.donationsService.redirectToCheckout(response))
     ).subscribe(
       (result) => {
         if (result && result.error) {
           console.error('Error during checkout:', result.error);
-          Swal.fire({
-            title: 'Error',
-            text: 'Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            confirmButtonColor: '#007BFF',
-          });
+          this.showError('Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.');
         }
         // Si no hay error, el usuario ha sido redirigido a Stripe
       },
       (error) => {
         console.error('Error initiating checkout:', error);
-        Swal.fire({
-          title: 'Error',
-          text: 'Hubo un problema al crear la sesión de pago. Por favor, inténtalo de nuevo más tarde.',
-          icon: 'error',
-          confirmButtonText: 'OK',
-          confirmButtonColor: '#007BFF',
-        });
+        this.showError('Hubo un problema al crear la sesión de pago. Por favor, inténtalo de nuevo más tarde.');
       }
     );
   }
 
-  async processSingleDonation() {
-    await this.processDonation(false);
+  processSingleDonation() {
+    this.processDonation(false);
   }
 
-  async processMonthlyDonation() {
-    await this.processDonation(true);
+  processMonthlyDonation() {
+    this.processDonation(true);
   }
 
   private getPriceIdForAmount(amount: number, type: 'single' | 'monthly'): string | null {
@@ -135,5 +118,53 @@ export class DonationsComponent implements OnInit {
     const selectedMapping = priceMapping[type] as { [key: number]: string };
 
     return selectedMapping[amount] || null;
+  }
+
+  private showError(message: string) {
+    Swal.fire({
+      title: 'Error',
+      text: message,
+      icon: 'error',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#007BFF',
+    });
+  }
+
+  // Nuevos métodos para manejar el historial de donaciones y cancelaciones
+
+  getUserDonations() {
+    const userId = this.authService.getCurrentUserId();
+    if (userId) {
+      this.donationsService.getUserDonations(userId).subscribe(
+        (donations) => {
+          console.log('Historial de donaciones:', donations);
+          // Aquí puedes manejar la visualización del historial de donaciones
+        },
+        (error) => {
+          console.error('Error al obtener el historial de donaciones:', error);
+          this.showError('No se pudo obtener el historial de donaciones.');
+        }
+      );
+    }
+  }
+
+  cancelRecurringDonation(subscriptionId: string) {
+    this.donationsService.cancelRecurringDonation(subscriptionId).subscribe(
+      (result) => {
+        console.log('Donación recurrente cancelada:', result);
+        Swal.fire({
+          title: 'Éxito',
+          text: 'La donación recurrente ha sido cancelada.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          confirmButtonColor: '#007BFF',
+        });
+        // Aquí puedes actualizar la UI o recargar el historial de donaciones
+      },
+      (error) => {
+        console.error('Error al cancelar la donación recurrente:', error);
+        this.showError('No se pudo cancelar la donación recurrente. Por favor, inténtalo de nuevo más tarde.');
+      }
+    );
   }
 }
