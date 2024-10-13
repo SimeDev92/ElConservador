@@ -15,12 +15,20 @@ export class PackagesService {
     private authService: AuthService
   ) {}
 
-  createCheckoutSession(priceId: string): Observable<any> {
+  createCheckoutSession(priceId: string): Observable<{ sessionId: string; url: string }> {
     const userId = this.authService.getCurrentUserId();
     if (!userId) {
       throw new Error('Usuario no autenticado');
     }
 
-    return this.http.post(`${this.apiUrl}/create-checkout-session`, { priceId, userId });
+    return this.http.post<{ sessionId: string; url: string }>(`${this.apiUrl}/create-checkout-session`, {
+      priceId,
+      userId,
+      mode: 'subscription',
+      metadata: {
+        type: 'package',
+        userId: userId
+      }
+    });
   }
 }
