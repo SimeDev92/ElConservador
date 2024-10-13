@@ -62,13 +62,23 @@ export class PackagesPageComponent {
       return;
     }
 
-    this.packagesService.createCheckoutSession( packageItem.priceId )
+    this.packagesService.createPackageCheckoutSession(packageItem.priceId)
       .subscribe(
-        response => {
-          // Redirigir a Stripe Checkout
-          window.location.href = response.url;
+        (response: { sessionId: string; url: string }) => {
+          if (response.url) {
+            window.location.href = response.url;
+          } else {
+            console.error('No se recibió una URL de redirección válida');
+            Swal.fire({
+              title: 'Error',
+              text: 'Hubo un problema al procesar tu solicitud. Por favor, inténtalo de nuevo más tarde.',
+              icon: 'error',
+              confirmButtonText: 'OK',
+              confirmButtonColor: '#007BFF',
+            });
+          }
         },
-        error => {
+        (error: Error) => {
           console.error('Error al crear la sesión de pago:', error);
           Swal.fire({
             title: 'Error',

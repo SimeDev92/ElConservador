@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { StripeError } from '@stripe/stripe-js';
 import Swal from 'sweetalert2';
 import { environments } from '../../environments/environments';
 import { DonationsService } from './donations.service';
@@ -48,23 +49,26 @@ export class DonationsComponent implements OnInit {
       return;
     }
 
-    const userId = this.authService.getCurrentUserId();
-    if (!userId) {
-      this.showError('No se pudo identificar al usuario. Por favor, inicia sesión nuevamente.');
-      return;
-    }
-
-    this.donationsService.createCheckoutSession(priceId, isRecurring, userId).pipe(
-      switchMap(response => this.donationsService.redirectToCheckout(response))
+    this.donationsService.createDonationCheckoutSession(priceId, isRecurring).pipe(
+      switchMap(response => {
+        if (response.url) {
+          window.location.href = response.url;
+          return of(null);
+        } else if (response.sessionId) {
+          return this.donationsService.redirectToCheckout({ sessionId: response.sessionId });
+        } else {
+          throw new Error('No se recibió ni URL ni sessionId');
+        }
+      })
     ).subscribe(
-      (result) => {
+      (result: { error?: StripeError } | null) => {
         if (result && result.error) {
           console.error('Error during checkout:', result.error);
-          this.showError('Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.');
+          this.showError(result.error.message || 'Hubo un problema al procesar el pago. Por favor, inténtalo de nuevo más tarde.');
         }
         // Si no hay error, el usuario ha sido redirigido a Stripe
       },
-      (error) => {
+      (error: Error) => {
         console.error('Error initiating checkout:', error);
         this.showError('Hubo un problema al crear la sesión de pago. Por favor, inténtalo de nuevo más tarde.');
       }
@@ -130,22 +134,17 @@ export class DonationsComponent implements OnInit {
     });
   }
 
-  // Nuevos métodos para manejar el historial de donaciones y cancelaciones
-
   getUserDonations() {
-    const userId = this.authService.getCurrentUserId();
-    if (userId) {
-      this.donationsService.getUserDonations(userId).subscribe(
-        (donations) => {
-          console.log('Historial de donaciones:', donations);
-          // Aquí puedes manejar la visualización del historial de donaciones
-        },
-        (error) => {
-          console.error('Error al obtener el historial de donaciones:', error);
-          this.showError('No se pudo obtener el historial de donaciones.');
-        }
-      );
-    }
+    this.donationsService.getUserDonations().subscribe(
+      (donations) => {
+        console.log('Historial de donaciones:', donations);
+        // Aquí puedes manejar la visualización del historial de donaciones
+      },
+      (error: Error) => {
+        console.error('Error al obtener el historial de donaciones:', error);
+        this.showError('No se pudo obtener el historial de donaciones.');
+      }
+    );
   }
 
   cancelRecurringDonation(subscriptionId: string) {
@@ -161,7 +160,7 @@ export class DonationsComponent implements OnInit {
         });
         // Aquí puedes actualizar la UI o recargar el historial de donaciones
       },
-      (error) => {
+      (error: Error) => {
         console.error('Error al cancelar la donación recurrente:', error);
         this.showError('No se pudo cancelar la donación recurrente. Por favor, inténtalo de nuevo más tarde.');
       }
