@@ -4,21 +4,23 @@
   width: 100%;
 }
 
-/* Estructura de la mat-toolbar */
+/* ---------- Mat-Toolbar (Navbar) ---------- */
 mat-toolbar {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 60px;
+  padding: 0;
+  margin: 0;
 }
 
 /* Secciones de la mat-toolbar con los colores de la bandera de España */
 .navbar-section {
   display: flex;
   align-items: center;
-  justify-content: center;
   height: 100%;
+  padding: 0;
 }
 
 .left-section {
@@ -33,12 +35,14 @@ mat-toolbar {
 }
 
 .right-section {
-  justify-content: flex-end;
+  justify-content: center;
   width: 20%;
   padding-right: 8px;
+  display: flex;
+  align-items: center;
 }
 
-/* Colores de las secciones de la bandera */
+/* ---------- Colores de las Secciones de la Bandera ---------- */
 .red-section {
   background-color: #C60B1E; /* Rojo de la bandera */
 }
@@ -50,36 +54,41 @@ mat-toolbar {
   justify-content: center;
 }
 
-/* Estilo del escudo de España */
+/* ---------- Escudo de España y Título ---------- */
 .escudo {
   height: 40px;
-  margin-right: 10px; /* Margen entre el escudo y el texto */
+  margin-right: 10px;
 }
 
-/* Estilo del título en negro */
 .site-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   font-weight: 700;
-  color: black; /* Cambiado a negro */
+  color: black;
 }
 
-/* Ajustes responsive para el título y el navbar en pantallas pequeñas */
-@media (max-width: 768px) {
-  .center-section {
-    width: 50%;
-  }
-
-  .right-section {
-    width: 30%;
-  }
-
-  .site-title {
-    font-size: 1.2rem; /* Reducción del tamaño del título para pantallas pequeñas */
-  }
+/* ---------- Iconos Personalizados (Flexbox) ---------- */
+.icon-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 140px;
+  gap: 8px; /* Espaciado entre iconos */
 }
 
-/* Menú hamburguesa personalizado con 3 franjas */
+.icon img {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.icon img:hover {
+  transform: scale(1.1);
+}
+
+/* Menú hamburguesa personalizado con tres barras */
 .hamburger-menu {
   display: flex;
   flex-direction: column;
@@ -87,6 +96,7 @@ mat-toolbar {
   width: 30px;
   height: 25px;
   cursor: pointer;
+  padding-left: 1rem;
 }
 
 .hamburger-menu .bar {
@@ -98,13 +108,13 @@ mat-toolbar {
 
 /* Fondo azul claro para la navegación lateral (sidenav) */
 .mat-sidenav {
-  background-color: #0066CC; /* Azul más claro */
-  color: white; /* Texto en blanco */
+  background-color: #0066CC;
+  color: white;
 }
 
 /* Cambiamos el fondo de la parte superior del menú lateral */
 .mat-sidenav .mat-toolbar {
-  background-color: #0066CC; /* Azul claro */
+  background-color: #0066CC;
   color: white;
 }
 
@@ -113,17 +123,17 @@ mat-toolbar {
   display: flex;
   align-items: center;
   padding: 15px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Para la animación */
-  color: white; /* Texto en blanco por defecto */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  color: white;
   cursor: pointer;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separador sutil entre ítems */
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo sutil en los ítems */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
 }
 
 /* Iconos dentro de los ítems del menú */
 .nav-item mat-icon {
-  color: white; /* Iconos en blanco */
+  color: white;
   margin-right: 10px;
 }
 
@@ -131,7 +141,7 @@ mat-toolbar {
 .nav-item:hover {
   background-image: linear-gradient(90deg, #C60B1E 50%, #FFC400 50%);
   color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra suave en hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 /* Animación de hover suave */
@@ -140,18 +150,8 @@ mat-toolbar {
   transition: transform 0.3s ease;
 }
 
-/* Fondo azul claro */
-.mat-sidenav {
-  background-color: #0066CC;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-}
-
 .mat-icon {
-  color: white; /* Aseguramos que los iconos sean blancos en todos lados */
+  color: white;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
@@ -162,3 +162,112 @@ mat-toolbar {
 .spacer {
   flex: 1 1 auto;
 }
+
+/* ---------- Responsive (Pantallas Pequeñas) ---------- */
+@media (max-width: 768px) {
+  .center-section {
+    width: 50%;
+  }
+
+  .right-section {
+    width: 30%;
+  }
+
+  .site-title {
+    font-size: calc(0.8rem + 1vw);
+  }
+
+  .escudo {
+    height: 30px;
+  }
+
+  .icon-group {
+    max-width: 100px;
+    gap: 6px; /* Ajuste del espaciado para pantallas más pequeñas */
+  }
+
+  .icon img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hamburger-menu {
+    width: 25px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .center-section {
+    width: 45%;
+  }
+
+  .right-section {
+    width: 35%;
+  }
+
+  .site-title {
+    font-size: calc(0.7rem + 1vw);
+  }
+
+  .escudo {
+    height: 25px;
+  }
+
+  .icon-group {
+    max-width: 80px;
+    gap: 4px; /* Espaciado reducido para pantallas muy pequeñas */
+  }
+
+  .icon img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .hamburger-menu {
+    width: 20px;
+    height: 15px;
+  }
+}
+
+.social-section {
+  padding: 16px;
+  background-color: rgba(255, 255, 255, 0.1);
+  margin-top: auto; /* Empuja la sección hacia abajo */
+}
+
+.social-title {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.social-icons button {
+  background-color: transparent;
+}
+
+.social-icons img {
+  width: 24px;
+  height: 24px;
+  filter: invert(1); /* Hace los iconos blancos */
+}
+
+/* Efecto hover */
+.social-icons button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.social-icons button:hover img {
+  transform: scale(1.1);
+  transition: transform 0.3s ease;
+}
+
+
+

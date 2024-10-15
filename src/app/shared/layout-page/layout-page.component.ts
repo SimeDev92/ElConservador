@@ -24,6 +24,9 @@ export class LayoutPageComponent {
 
   constructor(private router: Router) {}
 
+  navigateTo(url: string): void {
+    this.router.navigate([url]);
+  }
   openExternalLink(url: string): void {
     window.open(url, '_blank');
   }

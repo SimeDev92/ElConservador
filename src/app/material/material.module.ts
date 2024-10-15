@@ -54,12 +54,18 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 export class MaterialModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
     this.matIconRegistry.addSvgIcon(
-      'instagram',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/instagram.svg')
+      'x',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/x.svg')
     );
     this.matIconRegistry.addSvgIcon(
       'facebook',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/facebook.svg')
+      this.
+      domSanitizer.bypassSecurityTrustResourceUrl('assets/facebook.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'telegram',
+      this.
+      domSanitizer.bypassSecurityTrustResourceUrl('assets/telegram.svg')
     );
   }
 }

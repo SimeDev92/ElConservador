@@ -10,16 +10,29 @@
     </mat-toolbar>
 
     <mat-nav-list>
-      <mat-list-item
-        *ngFor="let item of sidebarItems"
-        [routerLink]="item.url"
-        (click)="sidenav.toggle()"
-        class="nav-item"
-      >
+      <mat-list-item *ngFor="let item of sidebarItems" [routerLink]="item.url" (click)="sidenav.toggle()"
+        class="nav-item">
         <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
         <span>{{ item.label }}</span>
       </mat-list-item>
     </mat-nav-list>
+
+    <!-- Sección de redes sociales en el menú lateral -->
+    <div class="social-section">
+      <h3 class="social-title">Síguenos</h3>
+      <div class="social-icons">
+        <button mat-icon-button (click)="openExternalLink('https://www.facebook.com')">
+          <img src="assets/facebook2.svg" alt="Facebook">
+        </button>
+        <button mat-icon-button (click)="openExternalLink('https://www.twitter.com')">
+          <img src="assets/x.svg" alt="Twitter">
+        </button>
+        <button mat-icon-button (click)="openExternalLink('https://t.me')">
+          <img src="assets/telegram.svg" alt="Telegram">
+        </button>
+      </div>
+    </div>
+
   </mat-sidenav>
 
   <!-- Navbar con los colores de la bandera de España -->
@@ -39,19 +52,22 @@
       <span class="site-title">El Conservador</span>
     </div>
 
-    <!-- Sección roja a la derecha con los otros botones -->
+    <!-- Sección roja a la derecha con los otros botones (sin Angular Material) -->
     <div class="navbar-section red-section right-section">
-      <button mat-icon-button [routerLink]="['/auth/login']">
-        <mat-icon>person</mat-icon>
-      </button>
-
-      <button mat-icon-button (click)="openExternalLink('https://www.instagram.com')">
-        <mat-icon svgIcon="instagram"></mat-icon>
-      </button>
-
-      <button mat-icon-button (click)="openExternalLink('https://www.facebook.com')">
-        <mat-icon svgIcon="facebook"></mat-icon>
-      </button>
+      <div class="icon-group">
+        <div class="icon" (click)="navigateTo('/auth/login')">
+          <img src="assets/person.svg" alt="Login">
+        </div>
+        <div class="icon" (click)="openExternalLink('https://www.facebook.com')">
+          <img src="assets/facebook2.svg" alt="Facebook">
+        </div>
+        <div class="icon" (click)="openExternalLink('https://www.twitter.com')">
+          <img src="assets/x.svg" alt="Twitter">
+        </div>
+        <div class="icon" (click)="openExternalLink('https://t.me')">
+          <img src="assets/telegram.svg" alt="Telegram">
+        </div>
+      </div>
     </div>
   </mat-toolbar>
 
@@ -60,5 +76,4 @@
     <router-outlet></router-outlet>
     <!-- <ng-content></ng-content> -->
   </main>
-
 </mat-sidenav-container>

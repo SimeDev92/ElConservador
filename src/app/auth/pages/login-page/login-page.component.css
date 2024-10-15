@@ -2,15 +2,17 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 100vh;
   background-color: #f5f5f5;
-  padding-top: 20px;
+  padding: 20px 0;
+  margin-top: 40px;
+  min-height: auto; /* Quitamos el min-height para evitar scroll innecesario */
 }
 
 .login-card {
   width: 100%;
   max-width: 400px;
   padding: 20px;
+  margin: 20px 0;
 }
 
 .full-width {
@@ -66,5 +68,8 @@ mat-form-field:first-of-type {
 @media (max-width: 600px) {
   .login-card {
     max-width: 90%;
+  }
+  .login-container {
+    margin-top: 20px;
   }
 }

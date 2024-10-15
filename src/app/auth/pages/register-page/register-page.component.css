@@ -2,9 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  height: 100vh;
   background-color: #f5f5f5;
-  padding-top: 20px;
+  padding: 20px 0;
+  margin-top: 40px; /* Para dar espacio desde el navbar */
+  min-height: auto; /* Eliminar la altura fija */
 }
 
 .register-card {
@@ -67,5 +68,8 @@ mat-form-field:first-of-type {
 @media (max-width: 600px) {
   .register-card {
     max-width: 90%;
+  }
+  .register-container {
+    margin-top: 20px;
   }
 }
