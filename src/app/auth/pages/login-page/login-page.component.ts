@@ -28,10 +28,8 @@ export class LoginPageComponent {
       next: (success) => {
         if (success) {
           const redirectUrl = this.authService.getRedirectUrl();
-          console.log('LoginComponent: Redirecting to:', redirectUrl);
           this.authService.clearRedirectUrl();
           this.router.navigateByUrl(redirectUrl).then(() => {
-            console.log('Navigation complete');
           }).catch(error => {
             console.error('Navigation failed:', error);
           });
@@ -51,6 +49,5 @@ export class LoginPageComponent {
 
   loginWithGoogle() {
     // Implementar lógica de inicio de sesión con Google aquí
-    console.log('Inicio de sesión con Google');
   }
 }

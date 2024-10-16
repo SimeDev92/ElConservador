@@ -22,18 +22,15 @@ export class AuthService {
   }
 
   setRedirectUrl(url: string) {
-    console.log('AuthService: Setting redirect URL to:', url);
     this._redirectUrl = url;
   }
 
   getRedirectUrl(): string {
     const url = this._redirectUrl || '/dashboard';
-    console.log('AuthService: Getting redirect URL:', url);
     return url;
   }
 
   clearRedirectUrl() {
-    console.log('AuthService: Clearing redirect URL');
     this._redirectUrl = null;
   }
 

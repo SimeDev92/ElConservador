@@ -137,7 +137,6 @@ export class DonationsComponent implements OnInit {
   getUserDonations() {
     this.donationsService.getUserDonations().subscribe(
       (donations) => {
-        console.log('Historial de donaciones:', donations);
         // Aquí puedes manejar la visualización del historial de donaciones
       },
       (error: Error) => {
@@ -150,7 +149,6 @@ export class DonationsComponent implements OnInit {
   cancelRecurringDonation(subscriptionId: string) {
     this.donationsService.cancelRecurringDonation(subscriptionId).subscribe(
       (result) => {
-        console.log('Donación recurrente cancelada:', result);
         Swal.fire({
           title: 'Éxito',
           text: 'La donación recurrente ha sido cancelada.',

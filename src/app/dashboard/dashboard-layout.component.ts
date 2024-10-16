@@ -32,7 +32,6 @@ export class DashboardLayoutComponent {
   }
 
   onEditProfile() {
-    console.log('Editar perfil');
   }
 
   onLogout() {

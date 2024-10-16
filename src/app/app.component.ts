@@ -24,7 +24,6 @@ export class AppComponent {
   })
 
   public authStatusChangedEffect = effect (() => {
-    console.log('Auth status changed:', this.authService.authStatus());
 
     switch (this.authService.authStatus()) {
       case AuthStatus.cheking:

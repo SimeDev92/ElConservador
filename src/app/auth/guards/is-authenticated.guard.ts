@@ -14,7 +14,6 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
   const router = inject( Router );
 
   if( authService.authStatus() === AuthStatus.authenticated ) {
-    console.log('isAuthenticatedGuard: User is authenticated, allowing access');
     return true;
   }
 
@@ -22,7 +21,6 @@ export const isAuthenticatedGuard: CanActivateFn = (route, state) => {
     return false;
   }
 
-  console.log('Guard: Saving redirect URL:', state.url);
   authService.setRedirectUrl(state.url)
   router.navigateByUrl('/auth/login');
   return false;

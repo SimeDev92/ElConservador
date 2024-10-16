@@ -10,11 +10,9 @@ export const isNotAuthenticatedGuard: CanActivateFn = (route, state) => {
 
   if (authService.authStatus() === AuthStatus.authenticated) {
     const redirectUrl = authService.getRedirectUrl();
-    console.log('isNotAuthenticatedGuard: User is authenticated, redirecting to:', redirectUrl);
     router.navigateByUrl(redirectUrl);
     return false;
   }
 
-  console.log('isNotAuthenticatedGuard: User is not authenticated, allowing access to auth routes');
   return true;
 };
