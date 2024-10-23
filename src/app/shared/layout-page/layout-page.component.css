@@ -71,10 +71,10 @@ mat-toolbar {
 .icon-group {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   max-width: 140px;
-  gap: 8px; /* Espaciado entre iconos */
+  gap: 20px; /* Espaciado entre iconos */
 }
 
 .icon img {
@@ -215,13 +215,13 @@ mat-toolbar {
   }
 
   .icon-group {
-    max-width: 80px;
-    gap: 4px; /* Espaciado reducido para pantallas muy pequeñas */
+    max-width: 120px; /* Incrementar el espacio disponible */
+    gap: 10px; /* Aumentar el espacio entre iconos */
   }
 
   .icon img {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   .hamburger-menu {

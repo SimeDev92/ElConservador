@@ -1,7 +1,8 @@
-<mat-card class="news-card" [routerLink]="['/news', new._id]">
+<mat-card class="news-card" [routerLink]="['/news', new._id]" style="cursor: pointer;">
   <mat-card-header>
-    <mat-card-title class="news-title">{{ new.title }}</mat-card-title>
-    <!-- Eliminado el subtítulo -->
+    <mat-card-title class="news-title">
+      {{ new.title }}
+    </mat-card-title>
   </mat-card-header>
 
   <img mat-card-image [src]="new.imgUrl" [alt]="new.tags" class="news-image">
@@ -17,24 +18,27 @@
   <mat-divider></mat-divider>
 
   <mat-card-actions class="card-actions">
-    <button mat-raised-button color="primary" [routerLink]="['/news', new._id]">
+    <button mat-raised-button color="primary">
       <mat-icon>more_horiz</mat-icon> Leer más
     </button>
     <span class="spacer"></span>
-    <button mat-fab color="accent" [matMenuTriggerFor]="shareMenu" matTooltip="Compartir">
+    <button mat-fab color="accent" [matMenuTriggerFor]="shareMenu" matTooltip="Compartir" (click)="$event.stopPropagation()">
       <mat-icon>share</mat-icon>
     </button>
     <mat-menu #shareMenu="matMenu">
-      <button mat-menu-item (click)="shareOnWhatsApp()">
-        <mat-icon>whatsapp</mat-icon> WhatsApp
+      <button mat-menu-item (click)="shareOnWhatsApp($event)">
+        <mat-icon svgIcon="whatsapp"></mat-icon> WhatsApp
       </button>
-      <button mat-menu-item (click)="shareOnFacebook()">
+      <button mat-menu-item (click)="shareOnFacebook($event)">
         <mat-icon svgIcon="facebook"></mat-icon> Facebook
       </button>
-      <button mat-menu-item (click)="shareOnTwitter()">
-        <mat-icon>twitter</mat-icon> Twitter
+      <button mat-menu-item (click)="shareOnTwitter($event)">
+        <mat-icon svgIcon="x"></mat-icon> Twitter
       </button>
-      <button mat-menu-item (click)="copyLink()">
+      <button mat-menu-item (click)="shareOnTelegram($event)">
+        <mat-icon svgIcon="telegram"></mat-icon> Telegram
+      </button>
+      <button mat-menu-item (click)="copyLink($event)">
         <mat-icon>link</mat-icon> Copiar enlace
       </button>
     </mat-menu>

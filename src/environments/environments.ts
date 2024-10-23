@@ -4,7 +4,10 @@ export const environments = {
 
   baseUrl: 'http://localhost:3000',
   production: false,
-  useTestProducts: true
+  useTestProducts: true,
+  facebookUrl: 'https://www.facebook.com',
+  twitterUrl: 'https://x.com/ConservadorTest',
+  telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8'
 
 }
 

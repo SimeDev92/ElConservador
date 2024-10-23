@@ -24,7 +24,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule } from '@angular/forms';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
-
 @NgModule({
   exports: [
     MatAutocompleteModule,
@@ -53,19 +52,22 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 })
 export class MaterialModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    // Registramos los iconos SVG personalizados con MatIconRegistry
     this.matIconRegistry.addSvgIcon(
       'x',
       this.domSanitizer.bypassSecurityTrustResourceUrl('assets/x.svg')
     );
     this.matIconRegistry.addSvgIcon(
       'facebook',
-      this.
-      domSanitizer.bypassSecurityTrustResourceUrl('assets/facebook.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/facebook.svg')
     );
     this.matIconRegistry.addSvgIcon(
       'telegram',
-      this.
-      domSanitizer.bypassSecurityTrustResourceUrl('assets/telegram.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/telegram.svg')
+    );
+    this.matIconRegistry.addSvgIcon(
+      'whatsapp',
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/whatsapp.svg')
     );
   }
 }

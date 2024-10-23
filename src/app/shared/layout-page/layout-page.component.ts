@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environments } from '../../../environments/environments';
 
 @Component({
   selector: 'app-layout-page',
@@ -7,6 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./layout-page.component.css']
 })
 export class LayoutPageComponent {
+
+  facebookUrl = environments.facebookUrl;
+  twitterUrl = environments.twitterUrl;
+  telegramUrl = environments.telegramUrl;
 
   public sidebarItems = [
     { label: 'Listado', icon: 'label', url: '/news/list' },

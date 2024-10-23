@@ -55,4 +55,11 @@ export class NewPageComponent implements OnInit {
     const text = encodeURIComponent(this.newsItem?.title || '');
     window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
   }
+
+  shareOnTelegram(): void {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(this.newsItem?.title || '');
+    window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+  }
+
 }
