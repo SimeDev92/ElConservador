@@ -6,25 +6,14 @@ import { NewsService } from '../../services/news.service';
 @Component({
   selector: 'app-list-page',
   templateUrl: './list-page.component.html',
-  styles: [`
-    .news-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
-
-    @media (max-width: 600px) {
-      .news-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-  `]
+  styleUrls: ['./list-page.component.css']
 })
 export class ListPageComponent implements OnInit {
-
   public news: New[] = [];
   public selectedCategory: string = '';
+  public currentPage: number = 1;
+  public pageSize: number = 10;
+  public totalNews: number = 0;
 
   constructor(
     private newsService: NewsService,
@@ -34,22 +23,44 @@ export class ListPageComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.selectedCategory = params['category'] || '';
+      this.currentPage = 1;
       this.loadNews();
     });
   }
 
   loadNews(): void {
-    this.news = [];
-    if (this.selectedCategory) {
-      this.newsService.getNewsByCategory(this.selectedCategory)
-        .subscribe(news => {
-          this.news = news;
-        });
-    } else {
-      this.newsService.getNews()
-        .subscribe(news => {
-          this.news = news;
-        });
-    }
+    this.newsService.getNews(this.currentPage, this.pageSize, this.selectedCategory)
+      .subscribe(
+        response => {
+          if (response && response.news) {
+            this.news = response.news;
+            this.totalNews = response.total;
+          } else {
+            this.news = [];
+            this.totalNews = 0;
+          }
+        },
+        error => {
+          console.error('Error loading news:', error);
+          this.news = [];
+          this.totalNews = 0;
+        }
+      );
+  }
+
+  loadMore(): void {
+    this.currentPage++;
+    this.newsService.getNews(this.currentPage, this.pageSize, this.selectedCategory)
+      .subscribe(
+        response => {
+          if (response && response.news) {
+            this.news = [...this.news, ...response.news];
+            this.totalNews = response.total;
+          }
+        },
+        error => {
+          console.error('Error loading more news:', error);
+        }
+      );
   }
 }

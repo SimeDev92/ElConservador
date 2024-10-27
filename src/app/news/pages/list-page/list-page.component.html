@@ -1,3 +1,10 @@
-<div class="news-grid">
-  <news-new-card *ngFor="let new of news" [new]="new"></news-new-card>
+<div class="news-grid" *ngIf="news && news.length > 0">
+  <news-new-card *ngFor="let newsItem of news" [new]="newsItem"></news-new-card>
+</div>
+<p *ngIf="!news || news.length === 0">No hay noticias disponibles.</p>
+
+<div class="load-more-container" *ngIf="news.length < totalNews">
+  <button mat-raised-button class="load-more-button" (click)="loadMore()">
+    Cargar más noticias
+  </button>
 </div>

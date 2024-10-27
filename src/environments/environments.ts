@@ -5,7 +5,7 @@ export const environments = {
   baseUrl: 'http://localhost:3000',
   production: false,
   useTestProducts: true,
-  facebookUrl: 'https://www.facebook.com',
+  facebookUrl: 'https://www.facebook.com/profile.php?id=61567155161620',
   twitterUrl: 'https://x.com/ConservadorTest',
   telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8'
 

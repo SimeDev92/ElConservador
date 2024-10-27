@@ -54,7 +54,7 @@ mat-toolbar {
   justify-content: center;
 }
 
-/* ---------- Escudo de España y Título ---------- */
+/* ---------- Logo y Título ---------- */
 .escudo {
   height: 40px;
   margin-right: 10px;
@@ -178,7 +178,7 @@ mat-toolbar {
   }
 
   .escudo {
-    height: 30px;
+    height: 40px;
   }
 
   .icon-group {
@@ -211,7 +211,7 @@ mat-toolbar {
   }
 
   .escudo {
-    height: 25px;
+    height: 35px;
   }
 
   .icon-group {
