@@ -11,6 +11,7 @@ import { SearchPageComponent } from './pages/search-page/search-page.component';
 import { CardComponent } from './components/card/card.component';
 import { NewImagePipe } from './pipes/new-image.pipe';
 import { NewPageComponent } from './pages/new-page/new-page.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NewPageComponent } from './pages/new-page/new-page.component';
     ReactiveFormsModule,
     NewsRoutingModule,
     MaterialModule,
+    SharedModule
   ],
 
 })

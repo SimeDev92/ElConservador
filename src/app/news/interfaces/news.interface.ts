@@ -4,7 +4,8 @@ export interface New {
   subtitle:    string;
   content:     string;
   author:      string;
-  date:        String;
+  authorName?: string;
+  date:        Date;
   imgUrl:      string;
   category:    string;
   subcategory: string;

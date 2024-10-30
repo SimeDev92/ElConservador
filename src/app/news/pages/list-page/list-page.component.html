@@ -1,3 +1,6 @@
+<h2 *ngIf="selectedCategory" class="categories-title">
+  {{ selectedCategory | categoryTranslate | titlecase }}
+</h2>
 <div class="news-grid" *ngIf="news && news.length > 0">
   <news-new-card *ngFor="let newsItem of news" [new]="newsItem"></news-new-card>
 </div>

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { New } from './../../interfaces/news.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'news-new-card',
@@ -10,10 +11,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class CardComponent implements OnInit {
   @Input() public new!: New;
 
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(
+    private snackBar: MatSnackBar,
+    private router: Router,
+
+  ) {}
 
   ngOnInit(): void {
     if (!this.new) throw Error('New property is required');
+  }
+
+  searchByTag(tag: string, event: Event) {
+    event.stopPropagation(); // Evita que el clic se propague a la tarjeta
+    this.router.navigate(['/news'], { queryParams: { search: tag } });
   }
 
   shareOnWhatsApp(event: Event) {

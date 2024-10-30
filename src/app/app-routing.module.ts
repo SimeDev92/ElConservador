@@ -5,6 +5,7 @@ import { PrivacyPolicyPageComponent } from './shared/pages/privacy-policy-page/p
 import { TermsAndConditionsPageComponent } from './shared/pages/terms-and-conditions-page/terms-and-conditions-page.component';
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guard';
+import { PublicarInformacionComponent } from './shared/pages/publicar-informacion/publicar-informacion.component';
 
 // dominio.com/
 const routes: Routes = [
@@ -37,6 +38,10 @@ const routes: Routes = [
   {
     path: 'terminos-y-condiciones', // Nueva ruta para Términos y Condiciones
     component: TermsAndConditionsPageComponent,
+  },
+  {
+    path: 'publicar-informacion', // Ruta para la nueva página de información
+    component: PublicarInformacionComponent,
   },
   {
     path: '404',

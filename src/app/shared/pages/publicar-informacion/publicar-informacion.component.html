@@ -1,0 +1,46 @@
+<div class="container p-2">
+  <h2 class="categories-title">Cómo Publicar Noticias</h2>
+  <p>Para publicar una noticia, sigue estos pasos:</p>
+
+  <ol>
+    <li>Accede al <strong>Bot del Centinela</strong> usando el siguiente enlace:
+        <a [href]="centinelaBotUrl" target="_blank">Bot del Centinela</a>.
+    </li>
+    <li>Introduce el código recibido por correo al suscribirte.</li>
+    <li>El Centinela validará tu suscripción y te pedirá aceptar los términos y condiciones.</li>
+    <li>Una vez aceptados, podrás enviar tu noticia y una imagen.</li>
+    <li>Tu noticia será revisada por los administradores de El Conservador.</li>
+    <li>Recibirás una notificación cuando tu noticia sea publicada.</li>
+  </ol>
+
+  <p>Asegúrate de leer nuestros
+     <a routerLink="/terminos-y-condiciones">Términos y Condiciones</a>
+     y nuestra
+     <a routerLink="/politica-de-privacidad">Política de Privacidad</a>.
+  </p>
+
+  <p>Si tienes dudas, no dudes en contactarnos a:
+     <a [href]="'mailto:' + contactEmail">{{ contactEmail }}</a>.
+  </p>
+</div>
+
+   <!-- Sección Últimas Noticias -->
+   <div class="col-12 md:col-6 lg:col-4 mb-4">
+    <mat-card class="patriotic-card h-full">
+      <mat-card-header>
+        <mat-card-title class="card-title">Últimas Noticias</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let news of latestNews" [routerLink]="['/news', news._id]">
+            <mat-icon matListItemIcon>article</mat-icon>
+            <span matListItemTitle>{{ news.title }}</span>
+            <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-actions class="text-center">
+        <button mat-raised-button class="donation-btn" routerLink="/news">Ver Todas</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>

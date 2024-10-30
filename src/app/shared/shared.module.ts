@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { LayoutPageComponent } from './layout-page/layout-page.component';
 import { PrivacyPolicyPageComponent } from './pages/privacy-policy-page/privacy-policy-page.component';
 import { TermsAndConditionsPageComponent } from './pages/terms-and-conditions-page/terms-and-conditions-page.component';
+import { CategoryTranslatePipe } from './pipes/category-translate.pipe';
+import { PublicarInformacionComponent } from './pages/publicar-informacion/publicar-informacion.component';
 
 
 
@@ -16,7 +18,9 @@ import { TermsAndConditionsPageComponent } from './pages/terms-and-conditions-pa
     Error404PageComponent,
     FooterComponent,
     PrivacyPolicyPageComponent,
-    TermsAndConditionsPageComponent
+    TermsAndConditionsPageComponent,
+    CategoryTranslatePipe,
+    PublicarInformacionComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ import { TermsAndConditionsPageComponent } from './pages/terms-and-conditions-pa
   exports: [
     LayoutPageComponent,
     Error404PageComponent,
-    FooterComponent
+    FooterComponent,
+    CategoryTranslatePipe
   ]
 })
 export class SharedModule { }

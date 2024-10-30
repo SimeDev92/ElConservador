@@ -1,69 +1,120 @@
-  <div class="container p-2">
-    <div class="dashboard-container">
-      <h1 class="patriotic-title text-4xl font-bold text-center mb-2">Bienvenido/a, {{ user()?.name }}</h1>
-      <p class="patriotic-subtitle text-xl text-center mb-4">Panel de Control de El Conservador</p>
+<div class="container p-2">
+  <div class="dashboard-container">
+    <h1 class="patriotic-title text-4xl font-bold text-center mb-2">Bienvenido/a, {{ user()?.name }}</h1>
+    <p class="patriotic-subtitle text-xl text-center mb-4">Panel de Control de El Conservador</p>
 
-      <div class="grid">
-        <div class="col-12 md:col-6 lg:col-3 mb-4">
-          <mat-card class="patriotic-card h-full">
-            <mat-card-header>
-              <mat-card-title>Paquete Activo</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <p class="mb-2">{{ activePackage.name }}</p>
-              <p>{{ activePackage.details }}</p>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button class="donation-btn" routerLink="/packages">Gestionar Paquete</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-
-        <div class="col-12 md:col-6 lg:col-3 mb-4">
-          <mat-card class="patriotic-card h-full">
-            <mat-card-header>
-              <mat-card-title>Estadísticas</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <ul class="patriotic-list">
-                <li class="mb-2">Noticias publicadas: {{ stats.publishedNews }}</li>
-                <li>Vistas totales: {{ stats.totalViews }}</li>
-              </ul>
-            </mat-card-content>
-          </mat-card>
-        </div>
-
-        <div class="col-12 md:col-6 lg:col-3 mb-4">
-          <mat-card class="patriotic-card h-full">
-            <mat-card-header>
-              <mat-card-title>Acciones Rápidas</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <button mat-raised-button class="donation-btn mb-2 w-full" (click)="onEditProfile()">Editar Perfil</button>
-              <button mat-raised-button class="custom-warn-button w-full" (click)="onLogout()">Cerrar Sesión</button>
-            </mat-card-content>
-          </mat-card>
-        </div>
-
-        <div class="col-12 md:col-6 lg:col-3 mb-4">
-          <mat-card class="patriotic-card h-full">
-            <mat-card-header>
-              <mat-card-title>Últimas Noticias</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <mat-list>
-                <mat-list-item *ngFor="let news of latestNews">
-                  <mat-icon matListItemIcon>article</mat-icon>
-                  <span matListItemTitle>{{ news.title }}</span>
-                  <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
-                </mat-list-item>
-              </mat-list>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button class="donation-btn" routerLink="/news">Ver Todas</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
+    <div class="grid">
+      <!-- Sección Paquete Activo -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Paquete Activo</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <ng-container *ngIf="activeSubscription; else noSubscription">
+              <p class="mb-2">Paquete: {{ activeSubscription.packageName }}</p>
+              <p>Válido hasta: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
+              <p>Precio: {{ activeSubscription.amount }} {{ activeSubscription.currency | uppercase }}</p>
+            </ng-container>
+            <ng-template #noSubscription>
+              <p>No tienes ningún paquete activo</p>
+            </ng-template>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+            <button mat-raised-button class="donation-btn" (click)="onManageSubscription()">
+              {{ activeSubscription ? 'Cancelar Suscripción' : 'Ver Paquetes' }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
       </div>
+
+      <!-- Sección Acciones Rápidas -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Acciones Rápidas</mat-card-title>
+          </mat-card-header>
+          <mat-card-content class="quick-actions-content">
+            <button mat-raised-button class="donation-btn mb-2 w-full" (click)="onEditProfile()">Editar Perfil</button>
+            <button mat-raised-button class="custom-warn-button w-full" (click)="onLogout()">Cerrar Sesión</button>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+      <!-- Sección Últimas Noticias -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Últimas Noticias</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item *ngFor="let news of latestNews" [routerLink]="['/news', news._id]">
+                <mat-icon matListItemIcon>article</mat-icon>
+                <span matListItemTitle>{{ news.title }}</span>
+                <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+            <button mat-raised-button class="donation-btn" routerLink="/news">Ver Todas</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <!-- Sección Mis Publicaciones -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Mis Publicaciones</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-list>
+              <mat-list-item *ngFor="let news of userNews" [routerLink]="['/news', news._id]">
+                <mat-icon matListItemIcon>article</mat-icon>
+                <span matListItemTitle>{{ news.title }}</span>
+                <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+            <button mat-raised-button class="donation-btn" (click)="loadMoreUserNews()">Cargar Más</button> <!-- Botón para cargar más -->
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+<!-- Sección Del Centinela -->
+<div class="col-12 md:col-6 lg:col-4 mb-4">
+  <mat-card class="patriotic-card h-full">
+    <mat-card-header>
+      <mat-card-title class="card-title">Publicar Noticias</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Publica tus noticias fácilmente:</p>
+
+      <button mat-raised-button
+              color="primary"
+              (click)="openCentinela()">
+        Publicar por Centinela (Recomendado)
+      </button>
+      
+      <button mat-raised-button
+              color="primary"
+              (click)="openEmail()">
+        Publicar por Email
+      </button>
+
+
+
+      <button mat-raised-button
+              color="accent"
+              routerLink="/publicar-informacion">
+        Cómo Publicar
+      </button>
+    </mat-card-content>
+  </mat-card>
+</div>
+
     </div>
   </div>
+</div>

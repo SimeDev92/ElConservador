@@ -9,7 +9,7 @@
 }
 
 .patriotic-subtitle {
-  color: #333;
+  color: #FFC400;
 }
 
 .patriotic-card {
@@ -19,6 +19,13 @@
   height: 100%;
 }
 
+.card-title {
+  color: #004080;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
 .donation-btn {
   background-color: #0066CC;
   color: white;
@@ -26,7 +33,6 @@
   font-size: 1.1rem;
   border-radius: 25px;
   transition: background-color 0.3s, transform 0.3s;
-  margin: 10px;
 }
 
 .donation-btn:hover {
@@ -56,4 +62,20 @@
 .news-date {
   font-size: 0.85em;
   color: #666;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.quick-actions-content {
+  margin-top: 1rem;
+}
+
+mat-list-item {
+  cursor: pointer;
+}
+
+mat-list-item:hover {
+  background-color: #f0f0f0;
 }

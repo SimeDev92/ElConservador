@@ -7,8 +7,11 @@ export const environments = {
   useTestProducts: true,
   facebookUrl: 'https://www.facebook.com/profile.php?id=61567155161620',
   twitterUrl: 'https://x.com/ConservadorTest',
-  telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8'
+  telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8',
 
+
+  contactEmail: 'info@elconservador.com',
+  centinelaBotUrl: 'https://t.me/Centinela_QA_bot'
 }
 
 

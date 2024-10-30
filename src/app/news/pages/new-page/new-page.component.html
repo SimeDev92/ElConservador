@@ -10,15 +10,14 @@
           <h2 class="news-subtitle">{{ newsItem.subtitle }}</h2>
           <div class="news-metadata">
             <mat-icon>person</mat-icon>
-            <span class="author">{{ newsItem.author }}</span>
+            <span class="author">{{ authorName }}</span>
             <mat-icon>event</mat-icon>
             <span class="date">{{ newsItem.date }}</span>
             <mat-icon>category</mat-icon>
-            <span class="category">{{ newsItem.category }}</span>
+            <span class="category">{{ newsItem.category | categoryTranslate }}</span>
           </div>
           <p class="news-content">{{ newsItem.content }}</p>
           <div class="news-tags">
-            <mat-icon>label</mat-icon>
             <span *ngFor="let tag of newsItem.tags" class="tag">#{{ tag }}</span>
           </div>
         </mat-card-content>

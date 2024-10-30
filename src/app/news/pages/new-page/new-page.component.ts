@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { switchMap, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { New } from '../../interfaces/news.interface';
 import { NewsService } from '../../services/news.service';
 
@@ -12,6 +13,7 @@ import { NewsService } from '../../services/news.service';
 export class NewPageComponent implements OnInit {
 
   public newsItem?: New;
+  public authorName: string = '';
 
   constructor(
     private newsService: NewsService,
@@ -23,18 +25,23 @@ export class NewPageComponent implements OnInit {
     this.activatedRoute.params
       .pipe(
         switchMap(({ id }) => this.newsService.getNewById(id)),
+        tap(newsItem => {
+          if (!newsItem) {
+            this.router.navigate(['/news']);
+            return;
+          }
+          if (typeof newsItem.date === 'string') {
+            newsItem.date = new Date(newsItem.date);
+          }
+          this.newsItem = newsItem;
+        }),
+        catchError(() => {
+          this.router.navigate(['/news']);
+          return of(null);
+        })
       )
-      .subscribe(newsItem => {
-
-        if (!newsItem) return this.router.navigate(['/news']);
-
-        newsItem.date = newsItem.date.split('T')[0];
-
-        this.newsItem = newsItem;
-        return;
-      })
+      .subscribe();
   }
-
   goBack(): void {
     this.router.navigateByUrl('/news');
   }
