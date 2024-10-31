@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
+import { MaterialModule } from './material/material.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 
 @NgModule({
   declarations: [
@@ -17,9 +19,10 @@ import { AuthInterceptor } from './auth/interceptors/auth.interceptor';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-
+    MaterialModule,
     AppRoutingModule,
     SharedModule,
+    SubscriptionModule
   ],
   providers: [
     provideAnimationsAsync(),

@@ -5,6 +5,8 @@ import { NewsService } from '../news/services/news.service';
 import { SubscriptionService } from '../subscription/services/subscription.service';
 import { New } from '../news/interfaces/news.interface';
 import { Subscription } from '../subscription/interfaces/subscription.interface';
+import { Clipboard } from '@angular/cdk/clipboard';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +18,7 @@ export class DashboardLayoutComponent implements OnInit {
   private newsService = inject(NewsService);
   private subscriptionService = inject(SubscriptionService);
   private router = inject(Router);
-
+  private clipboard = inject(Clipboard);
   public user = computed(() => this.authService.currentUser());
   public activeSubscription: Subscription | null = null;
   public userNews: New[] = [];
@@ -30,6 +32,28 @@ export class DashboardLayoutComponent implements OnInit {
     this.loadUserNews();
     this.loadLatestNews();
   }
+
+  getHiddenCode(code: string): string {
+    return code.slice(0, 3) + '****' + code.slice(-3); // Muestra los primeros 3 y últimos 3 caracteres
+  }
+
+  copyToClipboard(code: string) {
+    this.clipboard.copy(code);
+    Swal.fire({
+      title: '¡Copiado!',
+      text: 'El código ha sido copiado al portapapeles.',
+      icon: 'success',
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#007BFF',
+      toast: true,
+      position: 'top-end',
+      timer: 3000,
+      timerProgressBar: true,
+      showConfirmButton: false,
+    });
+  }
+
+
 
   loadActiveSubscription() {
     const userId = this.user()?._id;
@@ -45,6 +69,7 @@ export class DashboardLayoutComponent implements OnInit {
       );
     }
   }
+
 
   loadLatestNews() {
     this.newsService.getLatestNews(3).subscribe(

@@ -1,23 +1,46 @@
 <div class="subscription-management">
-  <h2>Gestión de Suscripción</h2>
+  <h2 class="categories-title">Gestión de Suscripción</h2>
 
-  <div *ngIf="activeSubscription; else noActiveSubscription">
-    <h3>Suscripción Activa</h3>
-    <p>Paquete: {{ activeSubscription.packageId }}</p>
-    <p>Fecha de inicio: {{ activeSubscription.startDate | date }}</p>
-    <p>Fecha de fin: {{ activeSubscription.endDate | date }}</p>
-    <button (click)="cancelSubscription()">Cancelar Suscripción</button>
-  </div>
+  <mat-card class="active-subscription-card">
+    <mat-card-header>
+      <mat-card-title>Suscripción Activa</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div *ngIf="activeSubscription; else noActiveSubscription">
+        <p>Paquete: {{ activeSubscription.packageName }}</p>
+        <p>Fecha de inicio: {{ activeSubscription.startDate | date:'dd/MM/yyyy' }}</p>
+        <p>Fecha de fin: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
+        <button mat-raised-button class="cancel-subscription-btn" (click)="cancelSubscription()">Cancelar Suscripción</button>
+      </div>
+      <ng-template #noActiveSubscription>
+        <p>No tienes una suscripción activa.</p>
+      </ng-template>
+    </mat-card-content>
+  </mat-card>
 
-  <ng-template #noActiveSubscription>
-    <p>No tienes una suscripción activa.</p>
-  </ng-template>
+  <mat-card class="available-packages-card">
+    <mat-card-header>
+      <mat-card-title>Paquetes Disponibles</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>Para ver nuestros paquetes disponibles, haz clic en el siguiente botón:</p>
+      <button mat-raised-button class="view-packages-btn" [routerLink]="['/packages']">Ver Paquetes</button>
+    </mat-card-content>
+  </mat-card>
 
-  <h3>Paquetes Disponibles</h3>
-  <div *ngFor="let package of availablePackages">
-    <h4>{{ package.name }}</h4>
-    <p>{{ package.description }}</p>
-    <p>Precio: {{ package.price | currency }}</p>
-    <button (click)="subscribeToPackage(package.stripePriceId)">Suscribirse</button>
-  </div>
+  <mat-card class="latest-news-card">
+    <mat-card-header>
+      <mat-card-title>Últimas Noticias</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let news of latestNews">
+          <mat-icon matListIcon aria-hidden="false" aria-label="News icon">article</mat-icon>
+          <a [routerLink]="['/news', news._id]" class="news-title">{{ news.title }}</a>
+        </mat-list-item>
+      </mat-list>
+      <button mat-raised-button class="view-all-news-btn" [routerLink]="['/news']">Ver Todas las Noticias</button>
+    </mat-card-content>
+  </mat-card>
+
 </div>

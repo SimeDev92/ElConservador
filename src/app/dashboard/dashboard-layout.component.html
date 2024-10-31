@@ -4,29 +4,37 @@
     <p class="patriotic-subtitle text-xl text-center mb-4">Panel de Control de El Conservador</p>
 
     <div class="grid">
-      <!-- Sección Paquete Activo -->
-      <div class="col-12 md:col-6 lg:col-4 mb-4">
-        <mat-card class="patriotic-card h-full">
-          <mat-card-header>
-            <mat-card-title class="card-title">Paquete Activo</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <ng-container *ngIf="activeSubscription; else noSubscription">
-              <p class="mb-2">Paquete: {{ activeSubscription.packageName }}</p>
-              <p>Válido hasta: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
-              <p>Precio: {{ activeSubscription.amount }} {{ activeSubscription.currency | uppercase }}</p>
-            </ng-container>
-            <ng-template #noSubscription>
-              <p>No tienes ningún paquete activo</p>
-            </ng-template>
-          </mat-card-content>
-          <mat-card-actions class="text-center">
-            <button mat-raised-button class="donation-btn" (click)="onManageSubscription()">
-              {{ activeSubscription ? 'Cancelar Suscripción' : 'Ver Paquetes' }}
-            </button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+<!-- Sección Paquete Activo -->
+<div class="col-12 md:col-6 lg:col-4 mb-4">
+  <mat-card class="patriotic-card h-full">
+    <mat-card-header>
+      <mat-card-title class="card-title">Paquete Activo</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container *ngIf="activeSubscription; else noSubscription">
+        <p class="mb-2">Paquete: {{ activeSubscription.packageName }}</p>
+        <p class="mb-2">Válido hasta: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
+        <p class="mb-2">Precio: {{ activeSubscription.amount }} {{ activeSubscription.currency | uppercase }}</p>
+        <p class="collaborator-code">
+          Código Colaborador:
+          <span class="code-display" (click)="copyToClipboard(activeSubscription.collaboratorCode)">
+            {{ getHiddenCode(activeSubscription.collaboratorCode) }}
+          </span>
+          <mat-icon class="copy-icon" (click)="copyToClipboard(activeSubscription.collaboratorCode)">content_copy</mat-icon>
+        </p>
+      </ng-container>
+      <ng-template #noSubscription>
+        <p>No tienes ningún paquete activo</p>
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="text-center">
+      <button mat-raised-button class="manage-subscription-btn" routerLink="/subscriptions/manage">
+        Gestionar Suscripción
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
 
       <!-- Sección Acciones Rápidas -->
       <div class="col-12 md:col-6 lg:col-4 mb-4">
@@ -62,59 +70,57 @@
         </mat-card>
       </div>
 
-      <!-- Sección Mis Publicaciones -->
-      <div class="col-12 md:col-6 lg:col-4 mb-4">
-        <mat-card class="patriotic-card h-full">
-          <mat-card-header>
-            <mat-card-title class="card-title">Mis Publicaciones</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <mat-list>
-              <mat-list-item *ngFor="let news of userNews" [routerLink]="['/news', news._id]">
-                <mat-icon matListItemIcon>article</mat-icon>
-                <span matListItemTitle>{{ news.title }}</span>
-                <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-          <mat-card-actions class="text-center">
-            <button mat-raised-button class="donation-btn" (click)="loadMoreUserNews()">Cargar Más</button> <!-- Botón para cargar más -->
-          </mat-card-actions>
-        </mat-card>
-      </div>
-
-<!-- Sección Del Centinela -->
+<!-- Sección Mis Publicaciones -->
 <div class="col-12 md:col-6 lg:col-4 mb-4">
   <mat-card class="patriotic-card h-full">
     <mat-card-header>
-      <mat-card-title class="card-title">Publicar Noticias</mat-card-title>
+      <mat-card-title class="card-title">Mis Publicaciones</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <p>Publica tus noticias fácilmente:</p>
-
-      <button mat-raised-button
-              color="primary"
-              (click)="openCentinela()">
-        Publicar por Centinela (Recomendado)
-      </button>
-      
-      <button mat-raised-button
-              color="primary"
-              (click)="openEmail()">
-        Publicar por Email
-      </button>
-
-
-
-      <button mat-raised-button
-              color="accent"
-              routerLink="/publicar-informacion">
-        Cómo Publicar
-      </button>
+      <ng-container *ngIf="userNews.length > 0; else noPublications">
+        <mat-list>
+          <mat-list-item *ngFor="let news of userNews" [routerLink]="['/news', news._id]">
+            <mat-icon matListItemIcon>article</mat-icon>
+            <span matListItemTitle>{{ news.title }}</span>
+            <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
+          </mat-list-item>
+        </mat-list>
+      </ng-container>
+      <ng-template #noPublications>
+        <p>Aún no tienes publicaciones.</p>
+      </ng-template>
     </mat-card-content>
+    <mat-card-actions class="text-center">
+      <button mat-raised-button
+              [ngClass]="{'donation-btn': userNews.length > 0, 'publish-btn': userNews.length === 0}"
+              [routerLink]="userNews.length > 0 ? null : '/packages'"
+              (click)="userNews.length > 0 ? loadMoreUserNews() : null">
+        {{ userNews.length > 0 ? 'Cargar Más' : '¡Publica En El Conservador!' }}
+      </button>
+    </mat-card-actions>
   </mat-card>
 </div>
 
+      <!-- Sección Del Centinela -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Publicar Noticias</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Publica tus noticias fácilmente:</p>
+            <button mat-raised-button class="centinela-btn mb-2 w-full" (click)="openCentinela()">
+              Publicar por Centinela (Recomendado)
+            </button>
+            <button mat-raised-button class="email-btn mb-2 w-full" (click)="openEmail()">
+              Publicar por Email
+            </button>
+            <button mat-raised-button class="info-btn w-full" routerLink="/publicar-informacion">
+              Cómo Publicar
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </div>
     </div>
   </div>
 </div>

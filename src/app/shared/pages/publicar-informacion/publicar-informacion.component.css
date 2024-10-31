@@ -1,19 +1,72 @@
-/* .container {
-  text-align: center;
-} */
+.container {
+  padding: 20px;
+}
 
-.categories-title {
+/* Títulos y cabeceras */
+.card-title {
   font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
   color: #C60B1E;
   margin-top: 5px;
+  text-align: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+/* Tarjetas (mat-card) */
+.info-card, .patriotic-card {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* Ancho máximo */
+}
+
+/* Estilo de lista de instrucciones */
+.steps-list {
+  text-align: left;
+  margin: 0;
+  padding-left: 20px; /* Indentación para la lista */
+}
+
+.steps-list li {
+  margin-bottom: 10px;
+}
+
 a {
-  color: #0066CC; /* Color para los enlaces */
+  color: #0066CC;
 }
 
 a:hover {
-  text-decoration: underline; /* Efecto hover para enlaces */
+  text-decoration: underline;
+}
+
+/* Lista de noticias */
+.latest-news-section mat-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  height: auto;
+}
+
+.latest-news-section mat-list-item mat-icon {
+  margin-right: 10px;
+  color: #C60B1E; /* Color del ícono */
+}
+
+.latest-news-section .news-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Botones */
+.view-all-news-btn {
+  background-color: #0066CC;
+  color: white;
+  margin-top: 20px;
+}
+
+.view-all-news-btn:hover {
+  background-color: #004C99;
 }

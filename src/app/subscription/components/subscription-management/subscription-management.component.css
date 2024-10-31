@@ -1,0 +1,111 @@
+.subscription-management {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.categories-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  text-align: center;
+  color: #C60B1E;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-card {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-title {
+  color: #004080;
+  font-size: 1.5em;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+p {
+  line-height: 1.6;
+  color: #333;
+  text-align: center;
+}
+
+button {
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+  display: block;
+  margin: 20px auto;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.cancel-subscription-btn {
+  background-color: #C60B1E;
+  color: white;
+}
+
+.cancel-subscription-btn:hover {
+  background-color: #A50E1E;
+}
+
+.view-packages-btn {
+  background-color: #FFC400;
+  color: black;
+}
+
+.view-packages-btn:hover {
+  background-color: #E6B000;
+}
+
+
+.latest-news-card mat-card-content {
+  padding: 15px;
+}
+
+.latest-news-card mat-list {
+  max-height: 300px;
+  overflow-y: auto;
+  border-top: 1px solid #ddd;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+
+mat-list-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+}
+
+mat-list-item mat-icon {
+  margin-right: 15px;
+  color: #C60B1E; /* Color del ícono */
+}
+
+mat-list-item a {
+  font-size: 1.1rem;
+  color: #333;
+  text-decoration: none;
+}
+
+mat-list-item a:hover {
+  color: #C60B1E;
+}
+
+.view-all-news-btn {
+  background-color: #0066CC;
+  color: white;
+  margin-top: 20px;
+}
+
+.view-all-news-btn:hover {
+  background-color: #004C99;
+}

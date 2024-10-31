@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SubscriptionService } from '../../services/subscription.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription } from '../../interfaces/subscription.interface';
+import { NewsService } from '../../../news/services/news.service';
+import { New } from '../../../news/interfaces/news.interface';
 
 @Component({
   selector: 'app-subscription-management',
@@ -10,22 +12,22 @@ import { Subscription } from '../../interfaces/subscription.interface';
 })
 export class SubscriptionManagementComponent implements OnInit {
   activeSubscription: Subscription | null = null;
-  availablePackages: any[] = [];
   userId: string | null = null;
+  latestNews: New[] = [];
 
   constructor(
     private subscriptionService: SubscriptionService,
-    private authService: AuthService
+    private authService: AuthService,
+    private newsService: NewsService
   ) {}
 
   ngOnInit() {
     this.userId = this.authService.getCurrentUserId();
     if (this.userId) {
       this.loadActiveSubscription();
-      this.loadAvailablePackages();
+      this.loadLatestNews();
     } else {
       console.error('No user ID available');
-      // Manejar el caso de usuario no autenticado
     }
   }
 
@@ -40,12 +42,12 @@ export class SubscriptionManagementComponent implements OnInit {
     }
   }
 
-  loadAvailablePackages() {
-    this.subscriptionService.getAllPackages().subscribe(
-      packages => {
-        this.availablePackages = packages;
+  loadLatestNews() {
+    this.newsService.getLatestNews(5).subscribe(
+      news => {
+        this.latestNews = news;
       },
-      error => console.error('Error loading packages:', error)
+      error => console.error('Error loading latest news:', error)
     );
   }
 
@@ -57,19 +59,6 @@ export class SubscriptionManagementComponent implements OnInit {
           // Mostrar mensaje de éxito
         },
         error => console.error('Error canceling subscription:', error)
-      );
-    }
-  }
-
-  subscribeToPackage(priceId: string) {
-    if (this.userId) {
-      const metadata = { type: 'package' };
-      this.subscriptionService.createCheckoutSession(priceId, this.userId, metadata).subscribe(
-        response => {
-          // Redirigir a Stripe Checkout
-          window.location.href = response.url;
-        },
-        error => console.error('Error creating checkout session:', error)
       );
     }
   }

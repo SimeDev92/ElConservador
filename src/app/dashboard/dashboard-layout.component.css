@@ -54,6 +54,32 @@
   transform: scale(1.05);
 }
 
+.centinela-btn {
+  background-color: #FFC400;
+  color: black;
+}
+
+.email-btn {
+  background-color: #0066CC;
+  color: white;
+}
+
+.info-btn {
+  background-color: #C60B1E;
+  color: white;
+}
+
+.centinela-btn, .email-btn, .info-btn {
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.centinela-btn:hover, .email-btn:hover, .info-btn:hover {
+  transform: scale(1.05);
+}
+
 .patriotic-list {
   list-style-type: none;
   padding-left: 0;
@@ -78,4 +104,54 @@ mat-list-item {
 
 mat-list-item:hover {
   background-color: #f0f0f0;
+}
+
+.manage-subscription-btn {
+  background-color: #808080; /* Color gris */
+  color: white;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+  display: block;
+  margin: 0 auto;
+}
+
+.manage-subscription-btn:hover {
+  background-color: #666666; /* Un gris más oscuro para el hover */
+  transform: scale(1.05);
+}
+.publish-btn {
+  background-color: #FFC400;
+  color: black;
+  padding: 10px 30px;
+  font-size: 1.1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.publish-btn:hover {
+  background-color: #E6B000;
+  transform: scale(1.05);
+}
+
+.collaborator-code {
+  margin-top: 10px;
+  color: #333;
+  text-align: left;
+}
+
+.code-display {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.code-display:hover {
+  text-decoration: underline;
+}
+
+.copy-icon {
+  vertical-align: middle;
+  cursor: pointer;
+  margin-left: 5px;
 }

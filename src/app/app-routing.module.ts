@@ -6,6 +6,7 @@ import { TermsAndConditionsPageComponent } from './shared/pages/terms-and-condit
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guard';
 import { PublicarInformacionComponent } from './shared/pages/publicar-informacion/publicar-informacion.component';
+import { SubscriptionManagementComponent } from './subscription/components/subscription-management/subscription-management.component';
 
 // dominio.com/
 const routes: Routes = [
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'publicar-informacion', // Ruta para la nueva página de información
     component: PublicarInformacionComponent,
+  },
+  {
+    path: 'subscriptions',
+    loadChildren: () => import('./subscription/subscription.module').then(m => m.SubscriptionModule) // Carga perezosa del módulo de suscripciones
   },
   {
     path: '404',
