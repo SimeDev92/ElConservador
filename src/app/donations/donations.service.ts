@@ -5,6 +5,7 @@ import { environments } from '../../environments/environments';
 import { Observable, from, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth/services/auth.service';
+import { Donation } from './interfaces/donation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -71,5 +72,21 @@ export class DonationsService {
 
   cancelRecurringDonation(subscriptionId: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/cancel-subscription`, { subscriptionId });
+  }
+  getActiveCollaborations(): Observable<Donation[]> {
+    const userId = this.authService.getCurrentUserId();
+    if (!userId) {
+      throw new Error('Usuario no autenticado');
+    }
+    return this.http.get<Donation[]>(`${this.apiUrl}/active-collaborations/${userId}`);
+  }
+
+
+  createNewCollaboration(priceId: string, isRecurring: boolean): Observable<{ sessionId: string; url: string }> {
+    return this.createDonationCheckoutSession(priceId, isRecurring);
+  }
+
+  cancelCollaboration(subscriptionId: string): Observable<any> {
+    return this.cancelRecurringDonation(subscriptionId);
   }
 }

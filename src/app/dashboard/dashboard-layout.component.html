@@ -22,15 +22,31 @@
           </span>
           <mat-icon class="copy-icon" (click)="copyToClipboard(activeSubscription.collaboratorCode)">content_copy</mat-icon>
         </p>
+        <!-- Aviso adicional para suscripción cancelada -->
+        <p *ngIf="activeSubscription.status === 'canceled'" class="subscription-status canceled">
+          <mat-icon>cancel</mat-icon> Suscripción Cancelada (Activa hasta la fecha de fin)
+        </p>
       </ng-container>
       <ng-template #noSubscription>
         <p>No tienes ningún paquete activo</p>
       </ng-template>
     </mat-card-content>
+    <br>
     <mat-card-actions class="text-center">
-      <button mat-raised-button class="manage-subscription-btn" routerLink="/subscriptions/manage">
-        Gestionar Suscripción
-      </button>
+      <ng-container *ngIf="activeSubscription; else becomeCollaboratorBtn">
+        <!-- Botón Gestionar Suscripción sin deshabilitar -->
+        <button
+          mat-raised-button
+          class="manage-subscription-btn"
+          (click)="onManageSubscription()">
+          Gestionar Suscripción
+        </button>
+      </ng-container>
+      <ng-template #becomeCollaboratorBtn>
+        <button mat-raised-button class="publish-btn" routerLink="/packages">
+          Conviértete en Colaborador
+        </button>
+      </ng-template>
     </mat-card-actions>
   </mat-card>
 </div>
@@ -44,6 +60,7 @@
           </mat-card-header>
           <mat-card-content class="quick-actions-content">
             <button mat-raised-button class="donation-btn mb-2 w-full" (click)="onEditProfile()">Editar Perfil</button>
+            <p></p>
             <button mat-raised-button class="custom-warn-button w-full" (click)="onLogout()">Cerrar Sesión</button>
           </mat-card-content>
         </mat-card>
@@ -70,36 +87,36 @@
         </mat-card>
       </div>
 
-<!-- Sección Mis Publicaciones -->
-<div class="col-12 md:col-6 lg:col-4 mb-4">
-  <mat-card class="patriotic-card h-full">
-    <mat-card-header>
-      <mat-card-title class="card-title">Mis Publicaciones</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ng-container *ngIf="userNews.length > 0; else noPublications">
-        <mat-list>
-          <mat-list-item *ngFor="let news of userNews" [routerLink]="['/news', news._id]">
-            <mat-icon matListItemIcon>article</mat-icon>
-            <span matListItemTitle>{{ news.title }}</span>
-            <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
-          </mat-list-item>
-        </mat-list>
-      </ng-container>
-      <ng-template #noPublications>
-        <p>Aún no tienes publicaciones.</p>
-      </ng-template>
-    </mat-card-content>
-    <mat-card-actions class="text-center">
-      <button mat-raised-button
-              [ngClass]="{'donation-btn': userNews.length > 0, 'publish-btn': userNews.length === 0}"
-              [routerLink]="userNews.length > 0 ? null : '/packages'"
-              (click)="userNews.length > 0 ? loadMoreUserNews() : null">
-        {{ userNews.length > 0 ? 'Cargar Más' : '¡Publica En El Conservador!' }}
-      </button>
-    </mat-card-actions>
-  </mat-card>
-</div>
+      <!-- Sección Mis Publicaciones -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Mis Publicaciones</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <ng-container *ngIf="userNews.length > 0; else noPublications">
+              <mat-list>
+                <mat-list-item *ngFor="let news of userNews" [routerLink]="['/news', news._id]">
+                  <mat-icon matListItemIcon>article</mat-icon>
+                  <span matListItemTitle>{{ news.title }}</span>
+                  <span matListItemLine class="news-date">{{ news.date | date:'short' }}</span>
+                </mat-list-item>
+              </mat-list>
+            </ng-container>
+            <ng-template #noPublications>
+              <p>Aún no tienes publicaciones.</p>
+            </ng-template>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+            <button mat-raised-button
+                    [ngClass]="{'donation-btn': userNews.length > 0, 'publish-btn': userNews.length === 0}"
+                    [routerLink]="userNews.length > 0 ? null : '/packages'"
+                    (click)="userNews.length > 0 ? loadMoreUserNews() : null">
+              {{ userNews.length > 0 ? 'Cargar Más' : '¡Publica En El Conservador!' }}
+            </button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
 
       <!-- Sección Del Centinela -->
       <div class="col-12 md:col-6 lg:col-4 mb-4">
@@ -110,7 +127,9 @@
           <mat-card-content>
             <p>Publica tus noticias fácilmente:</p>
             <button mat-raised-button class="centinela-btn mb-2 w-full" (click)="openCentinela()">
-              Publicar por Centinela (Recomendado)
+              <span class="icon-star"><mat-icon>star</mat-icon></span>
+              <span class="button-text">Publicar por Centinela</span>
+              <span class="icon-star"><mat-icon>star</mat-icon></span>
             </button>
             <button mat-raised-button class="email-btn mb-2 w-full" (click)="openEmail()">
               Publicar por Email
@@ -121,6 +140,44 @@
           </mat-card-content>
         </mat-card>
       </div>
+
+      <!-- Sección Colaboraciones Activas -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Colaboraciones Activas</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <ng-container *ngIf="activeCollaborations.length > 0; else noCollaboration">
+              <div *ngFor="let collaboration of activeCollaborations" class="collaboration-item">
+                <mat-card class="collaboration-card mb-3">
+                  <mat-card-content>
+                    <p class="mb-2"><strong>Cantidad:</strong> {{ collaboration.amount }} {{ collaboration.currency | uppercase }}</p>
+                    <p class="mb-2"><strong>Fecha de Inicio:</strong> {{ collaboration.date | date:'dd/MM/yyyy' }}</p>
+                    <p class="mb-2"><strong>Estatus:</strong> {{ collaboration.status }}</p>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+            </ng-container>
+            <ng-template #noCollaboration>
+              <p>Aún no tienes ninguna colaboración activa.</p>
+            </ng-template>
+          </mat-card-content>
+          <mat-card-actions class="text-center">
+            <button mat-raised-button class="manage-subscription-btn"
+                    *ngIf="activeCollaborations.length > 0; else supportButton"
+                    (click)="onManageCollaboration()">
+              Gestionar Colaboraciones
+            </button>
+            <ng-template #supportButton>
+              <button mat-raised-button class="publish-btn" routerLink="/donations">
+                ¡Apóyanos!
+              </button>
+            </ng-template>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
     </div>
   </div>
 </div>

@@ -12,7 +12,8 @@
             <mat-icon>person</mat-icon>
             <span class="author">{{ authorName }}</span>
             <mat-icon>event</mat-icon>
-            <span class="date">{{ newsItem.date }}</span>
+            <span class="date">{{ newsItem.date | date: 'dd/MM/yyyy' }}</span>
+
             <mat-icon>category</mat-icon>
             <span class="category">{{ newsItem.category | categoryTranslate }}</span>
           </div>

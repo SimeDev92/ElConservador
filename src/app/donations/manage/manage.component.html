@@ -1,0 +1,27 @@
+<div class="manage-container">
+  <h2 class="manage-title">Mis Colaboraciones Activas</h2>
+
+  <div class="collaborations-grid">
+    <ng-container *ngIf="activeDonations.length > 0; else noDonations">
+      <mat-card *ngFor="let donation of activeDonations" class="collaboration-card">
+        <mat-card-title>
+          <mat-icon>volunteer_activism</mat-icon>
+          <span class="card-title-text">Colaboración</span>
+        </mat-card-title>
+        <mat-card-content>
+          <p><mat-icon>euro</mat-icon> <strong>Cantidad:</strong> {{ donation.amount }} {{ donation.currency | uppercase }}</p>
+          <p><mat-icon>calendar_today</mat-icon> <strong>Fecha de Inicio:</strong> {{ donation.date | date: 'dd/MM/yyyy' }}</p>
+        </mat-card-content>
+        <mat-card-actions class="center-actions">
+          <button mat-raised-button class="cancel-collaboration-btn" (click)="cancelDonation(donation.stripeSubscriptionId!)">
+            Cancelar Colaboración
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+
+    <ng-template #noDonations>
+      <p>No tienes ninguna colaboración activa.</p>
+    </ng-template>
+  </div>
+</div>

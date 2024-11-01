@@ -15,10 +15,9 @@ export class SubscriptionService {
     return this.http.get<any>(`${this.apiUrl}/active-subscription/${userId}`);
   }
 
-  cancelSubscription(subscriptionId: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/cancel/${subscriptionId}`, {});
+  cancelSubscription(stripeSubscriptionId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/cancel/${stripeSubscriptionId}`, {});
   }
-
   getAllPackages(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }

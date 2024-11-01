@@ -1,0 +1,74 @@
+.manage-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.manage-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  text-align: center;
+  color: #C60B1E;
+  margin-bottom: 20px;
+}
+
+.collaborations-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+}
+
+.collaboration-card {
+  width: 100%;
+  max-width: 320px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+mat-card-title {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  color: #004080;
+}
+
+.card-title-text {
+  margin-left: 8px;
+}
+
+mat-card-content p {
+  font-size: 1rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+mat-card-content p mat-icon {
+  margin-right: 8px;
+  color: #0066CC;
+}
+
+.center-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.cancel-collaboration-btn {
+  background-color: #808080;
+  color: white;
+  display: block;
+  margin: 0 auto;
+  padding: 8px 24px;
+  font-size: 1rem;
+  border-radius: 25px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.cancel-collaboration-btn:hover {
+  background-color: #666666;
+  transform: scale(1.05);
+}

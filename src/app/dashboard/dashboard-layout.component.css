@@ -155,3 +155,23 @@ mat-list-item:hover {
   cursor: pointer;
   margin-left: 5px;
 }
+
+.centinela-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px;
+}
+
+.icon-star {
+  margin: 0 5px;
+  vertical-align: middle; 
+}
+
+.button-text {
+  font-weight: bold;
+  text-align: center;
+  flex-grow: 1; /* Asegura que el texto ocupe espacio en el centro */
+}
+
+

@@ -33,20 +33,20 @@ const routes: Routes = [
     loadChildren: () => import('./packages/packages.module').then(m => m.PackagesModule)
   },
   {
-    path: 'politica-de-privacidad', // Nueva ruta para la Política de Privacidad
+    path: 'politica-de-privacidad',
     component: PrivacyPolicyPageComponent,
   },
   {
-    path: 'terminos-y-condiciones', // Nueva ruta para Términos y Condiciones
+    path: 'terminos-y-condiciones',
     component: TermsAndConditionsPageComponent,
   },
   {
-    path: 'publicar-informacion', // Ruta para la nueva página de información
+    path: 'publicar-informacion',
     component: PublicarInformacionComponent,
   },
   {
     path: 'subscriptions',
-    loadChildren: () => import('./subscription/subscription.module').then(m => m.SubscriptionModule) // Carga perezosa del módulo de suscripciones
+    loadChildren: () => import('./subscription/subscription.module').then(m => m.SubscriptionModule)
   },
   {
     path: '404',

@@ -22,26 +22,38 @@ export class NewPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("ngOnInit - Component initialized"); // Log inicial
+
     this.activatedRoute.params
       .pipe(
-        switchMap(({ id }) => this.newsService.getNewById(id)),
+        switchMap(({ id }) => {
+          return this.newsService.getNewById(id);
+        }),
         tap(newsItem => {
+
           if (!newsItem) {
             this.router.navigate(['/news']);
             return;
           }
+
           if (typeof newsItem.date === 'string') {
             newsItem.date = new Date(newsItem.date);
           }
+
           this.newsItem = newsItem;
+
+          // Asignar el nombre del autor si está presente en newsItem
+          this.authorName = this.newsItem.authorName || 'Autor desconocido';
         }),
-        catchError(() => {
+        catchError((error) => {
+          console.error("ngOnInit - Error fetching news item:", error);
           this.router.navigate(['/news']);
           return of(null);
         })
       )
       .subscribe();
   }
+
   goBack(): void {
     this.router.navigateByUrl('/news');
   }
@@ -68,5 +80,4 @@ export class NewPageComponent implements OnInit {
     const text = encodeURIComponent(this.newsItem?.title || '');
     window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
   }
-
 }

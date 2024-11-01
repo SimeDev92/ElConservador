@@ -10,7 +10,15 @@
         <p>Paquete: {{ activeSubscription.packageName }}</p>
         <p>Fecha de inicio: {{ activeSubscription.startDate | date:'dd/MM/yyyy' }}</p>
         <p>Fecha de fin: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
-        <button mat-raised-button class="cancel-subscription-btn" (click)="cancelSubscription()">Cancelar Suscripción</button>
+        <!-- Deshabilitar el botón si la suscripción está cancelada -->
+        <button mat-raised-button
+        class="cancel-subscription-btn"
+        (click)="cancelSubscription()"
+        [disabled]="activeSubscription.status === 'canceled'"
+        [ngClass]="{'canceled-button': activeSubscription.status === 'canceled'}">
+  {{ activeSubscription.status === 'canceled' ? 'Suscripción Cancelada' : 'Cancelar Suscripción' }}
+</button>
+
       </div>
       <ng-template #noActiveSubscription>
         <p>No tienes una suscripción activa.</p>

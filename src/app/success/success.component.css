@@ -1,4 +1,4 @@
-.success-container, .cancel-container {
+.success-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,7 +6,7 @@
   background-color: #f0f0f0;
 }
 
-.success-card, .cancel-card {
+.success-card {
   max-width: 400px;
   width: 100%;
   text-align: center;
@@ -24,48 +24,42 @@
   opacity: 0.1;
 }
 
-/* .decoration-success {
-}
-
-.decoration-cancel {
-} */
-
-.success-title, .cancel-title {
+.success-title {
   font-family: 'Playfair Display', serif;
   font-size: 2rem;
   color: #C60B1E;
   margin-bottom: 20px;
 }
 
-.success-message, .cancel-message {
+.success-message {
   font-size: 1.1rem;
   color: #333;
   margin-bottom: 20px;
 }
 
-.success-icon, .cancel-icon {
+.success-icon {
   font-size: 48px;
   height: 48px;
   width: 48px;
+  color: #4CAF50;
   margin-bottom: 20px;
 }
 
-.success-icon {
-  color: #4CAF50;
+.card-actions {
+  display: flex;
+  justify-content: center;
 }
 
-.cancel-icon {
-  color: #F44336;
-}
-
-.return-btn, .retry-btn {
+.card-actions button[mat-raised-button] {
+  background-color: #0066CC; /* Azul oscuro */
+  color: white;
   padding: 10px 30px;
   font-size: 1.1rem;
   border-radius: 25px;
   transition: background-color 0.3s, transform 0.3s;
 }
 
-.return-btn:hover, .retry-btn:hover {
+.card-actions button[mat-raised-button]:hover {
   transform: scale(1.05);
 }
 

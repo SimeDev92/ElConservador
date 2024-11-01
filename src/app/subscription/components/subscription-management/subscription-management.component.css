@@ -109,3 +109,8 @@ mat-list-item a:hover {
 .view-all-news-btn:hover {
   background-color: #004C99;
 }
+
+.cancel-subscription-btn.canceled-button {
+  background-color: #808080; /* Color gris para el botón cancelado */
+  color: white;
+}

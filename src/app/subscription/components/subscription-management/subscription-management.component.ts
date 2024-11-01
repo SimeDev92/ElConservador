@@ -4,6 +4,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { Subscription } from '../../interfaces/subscription.interface';
 import { NewsService } from '../../../news/services/news.service';
 import { New } from '../../../news/interfaces/news.interface';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-subscription-management',
@@ -36,12 +37,12 @@ export class SubscriptionManagementComponent implements OnInit {
       this.subscriptionService.getActiveSubscription(this.userId).subscribe(
         subscription => {
           this.activeSubscription = subscription;
+          console.log('Active subscription loaded:', this.activeSubscription);
         },
         error => console.error('Error loading active subscription:', error)
       );
     }
   }
-
   loadLatestNews() {
     this.newsService.getLatestNews(5).subscribe(
       news => {
@@ -52,14 +53,36 @@ export class SubscriptionManagementComponent implements OnInit {
   }
 
   cancelSubscription() {
-    if (this.activeSubscription && this.activeSubscription._id) {
-      this.subscriptionService.cancelSubscription(this.activeSubscription._id).subscribe(
+    if (this.activeSubscription && this.activeSubscription.stripeSubscriptionId) {
+      console.log('Stripe Subscription ID:', this.activeSubscription.stripeSubscriptionId);
+      this.subscriptionService.cancelSubscription(this.activeSubscription.stripeSubscriptionId).subscribe(
         () => {
           this.activeSubscription = null;
-          // Mostrar mensaje de éxito
+          Swal.fire({
+            title: 'Suscripción Cancelada',
+            text: 'Tu suscripción ha sido cancelada exitosamente.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            confirmButtonColor: '#007BFF',
+          });
         },
-        error => console.error('Error canceling subscription:', error)
+        error => {
+          Swal.fire({
+            title: 'Error',
+            text: 'Hubo un problema al cancelar la suscripción. Por favor, intenta de nuevo.',
+            icon: 'error',
+            confirmButtonText: 'OK',
+          });
+        }
       );
+    } else {
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo encontrar una suscripción activa para cancelar.',
+        icon: 'warning',
+        confirmButtonText: 'OK',
+      });
     }
   }
+
 }
