@@ -1,9 +1,9 @@
-
 .packages-container {
   padding: 40px 20px;
   text-align: center;
   min-height: calc(100vh - 100px);
-  background-color: #f0f0f0;
+  background: linear-gradient(45deg, #1a1a2e, #16213e, #0f3460);
+  perspective: 1000px;
 }
 
 .packages-title {
@@ -18,150 +18,196 @@
 .packages-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  gap: 40px;
+  justify-items: center;
 }
 
-/* Estilos para las tarjetas de los paquetes */
 .package-card {
-  background-color: #ffffff;
-  color: #000;
+  background: transparent;
   border-radius: 15px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s;
   overflow: hidden;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  width: 100%;
+  max-width: 350px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.package-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: shine 3s linear infinite;
+}
+.package-card mat-card-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
   position: relative;
-  animation: fadeInUp 0.6s ease-out forwards;
-  opacity: 0;
+}
+
+.package-card mat-card-title::after {
+  content: '';
+  display: block;
+  width: 80%;
+  height: 3px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, #99cfff, #336699);
+  background-size: 200% 100%;
+  background-position: 0 0;
+  transition: background-position 0.5s ease;
+  border-radius: 5px;
+  opacity: 0.7;
+}
+
+.package-card:hover mat-card-title::after {
+  background-position: 100% 0;
+}
+
+@keyframes shine {
+  from { transform: translateX(-100%) rotate(30deg); }
+  to { transform: translateX(100%) rotate(30deg); }
 }
 
 .package-card:nth-child(1) {
-  animation-delay: 0.2s;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
 }
 
 .package-card:nth-child(2) {
-  animation-delay: 0.4s;
+  background: linear-gradient(135deg, #c0c0c0, #a0a0a0);
 }
 
 .package-card:nth-child(3) {
-  animation-delay: 0.6s;
+  background: linear-gradient(135deg, #cd7f32, #b36a23);
 }
 
 .package-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
 }
 
-.card-decoration {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100px;
-  opacity: 0.1;
-  transition: opacity 0.3s ease;
-}
-
-.decoration-0 {
-  background: url('../../../../assets/red-pattern.jpg') repeat;
-}
-
-.decoration-1 {
-  background: url('../../../../assets/yellow-pattern.jpg') repeat;
-}
-
-.decoration-2 {
-  background: url('../../../../assets/blue-pattern.jpg') repeat;
-}
-
-.package-card:hover .card-decoration {
-  opacity: 0.2;
-}
-
-.package-card mat-card-header {
-  padding: 20px;
-  position: relative;
-  z-index: 1;
+/* Descripción estilizada */
+.package-card p {
+  font-size: 1.2rem;
+  color: #FFFFFF;
+  font-weight: 600;
+  margin-bottom: 20px;
   text-align: center;
+  line-height: 1.5;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+.package-card mat-card-title,
+.package-card mat-card-subtitle,
+.package-card ul,
+.package-card li {
+  text-align: center;
+  width: 100%;
 }
 
 .package-card mat-card-title {
-  font-size: 1.8rem;
+  font-size: 2.5rem;
   font-weight: bold;
-  margin-bottom: 10px;
-  color: #C60B1E;
-  text-align: center !important;
+  color: #FFFFFF;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
 }
 
 .package-card mat-card-subtitle {
-  font-size: 1.2rem;
-  color: #004080;
-  text-align: center;
+  font-size: 1.6rem;
+  color: #FFFFFF;
+  opacity: 0.9;
+  margin-bottom: 20px;
 }
 
-.package-card mat-card-content {
-  padding: 20px;
-  flex-grow: 1;
-  position: relative;
-  z-index: 1;
-}
-
+/* Alinear características a la izquierda */
 .package-card ul {
   list-style-type: none;
   padding: 0;
+  margin: 0 auto 30px;
+  width: 100%;
   text-align: left;
 }
 
 .package-card li {
-  margin-top: 10px;
   display: flex;
   align-items: center;
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  margin-top: 10px;
 }
 
-.package-card li mat-icon {
+.package-card li mat-icon.feature-icon {
   margin-right: 10px;
-  color: #FFC400;
-}
-
-.package-card mat-card-actions {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
+  color: #eeefef;
+  font-size: 1.3rem;
 }
 
 /* Botón de contratar */
 .contratar-btn {
-  background-color: #0066CC;
-  color: white;
-  padding: 10px 30px;
-  font-size: 1.1rem;
-  border-radius: 25px;
-  transition: background-color 0.3s, transform 0.3s;
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+  padding: 15px 40px;
+  font-size: 1.3rem;
+  border-radius: 50px;
+  border: 2px solid #FFFFFF;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin-top: 20px;
+}
+
+.contratar-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background: #FFFFFF;
+  transition: all 0.3s ease;
+  z-index: -1;
+}
+
+.contratar-btn:hover::before {
+  width: 100%;
 }
 
 .contratar-btn:hover {
-  background-color: #003366;
-  transform: scale(1.05);
-}
-.package-card mat-card-header,
-.package-card mat-card-title,
-.package-card mat-card-subtitle {
-  display: flex !important; /* Usar flex para centrar */
-  flex-direction: column !important; /* Asegura la disposición vertical */
-  align-items: center !important; /* Centra horizontalmente */
-  justify-content: center !important; /* Centra verticalmente */
-  text-align: center !important; /* Centra el texto */
+  color: #000000;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
-/* Animación de entrada */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.package-card:nth-child(1) .contratar-btn:hover {
+  color: #ffd700;
+}
+
+.package-card:nth-child(2) .contratar-btn:hover {
+  color: #c0c0c0;
+}
+
+.package-card:nth-child(3) .contratar-btn:hover {
+  color: #cd7f32;
 }

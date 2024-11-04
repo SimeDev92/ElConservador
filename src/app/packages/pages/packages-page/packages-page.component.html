@@ -1,5 +1,5 @@
 <div class="container p-2">
-  <h1 class="packages-title">Paquetes Patrióticos de Publicación</h1>
+  <h1 class="packages-title">Deja Tu Huella en la Opinión Pública</h1>
   <div class="packages-grid">
     <mat-card *ngFor="let package of packages; let i = index" class="package-card">
       <div class="card-decoration" [ngClass]="'decoration-' + i"></div>
@@ -11,12 +11,15 @@
         <p>{{ package.description }}</p>
         <ul>
           <li *ngFor="let feature of package.features">
-            <mat-icon>check</mat-icon> {{ feature }}
+            <mat-icon class="feature-icon">check_circle</mat-icon> {{ feature }}
           </li>
         </ul>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button class="contratar-btn" (click)="contractPackage(package)">Contratar Ahora</button>
+        <button mat-raised-button class="contratar-btn" (click)="contractPackage(package)">
+          <mat-icon>shopping_cart</mat-icon>
+          Contratar Ahora
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>

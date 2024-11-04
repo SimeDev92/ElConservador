@@ -1,12 +1,20 @@
 <h2 *ngIf="selectedCategory" class="categories-title">
   {{ selectedCategory | categoryTranslate | titlecase }}
 </h2>
-<div class="news-grid" *ngIf="news && news.length > 0">
+
+<div *ngIf="isLoading" class="loader-container">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="news-grid" *ngIf="!isLoading && news && news.length > 0">
   <news-new-card *ngFor="let newsItem of news" [new]="newsItem"></news-new-card>
 </div>
-<p *ngIf="!news || news.length === 0">No hay noticias disponibles.</p>
 
-<div class="load-more-container" *ngIf="news.length < totalNews">
+<p *ngIf="!isLoading && (!news || news.length === 0)" class="no-news-message">
+  No se encontraron noticias. Por favor, intenta con otra categoría o búsqueda.
+</p>
+
+<div class="load-more-container" *ngIf="!isLoading && news.length < totalNews">
   <button mat-raised-button class="load-more-button" (click)="loadMore()">
     Cargar más noticias
   </button>
