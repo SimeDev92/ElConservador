@@ -82,7 +82,7 @@
   background-position: center;
   text-align: center;
   padding: 20px;
-  height: 200px; /* Ajusta la altura según sea necesario */
+  height: 200px;
   position: relative;
   display: flex;
   justify-content: center;
@@ -111,7 +111,6 @@
   height: 100vh;
 }
 
-/* Botón de compartir */
 button.compartir {
   background-color: #C60B1E; /* Rojo patriótico */
   color: #ffffff;
@@ -121,7 +120,6 @@ button.compartir:hover {
   background-color: #b50a1a;
 }
 
-/* Botón de volver al inicio */
 button.volver-inicio {
   background-color: #0066CC; /* Azul oscuro */
   color: white;

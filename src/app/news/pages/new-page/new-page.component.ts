@@ -22,8 +22,7 @@ export class NewPageComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("ngOnInit - Component initialized"); // Log inicial
-
+    console.log("ngOnInit - Component initialized");
     this.activatedRoute.params
       .pipe(
         switchMap(({ id }) => {

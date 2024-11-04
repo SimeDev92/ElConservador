@@ -41,3 +41,17 @@
 .load-more-button:hover {
   opacity: 0.9;
 }
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.no-news-message {
+  text-align: center;
+  font-size: 1.2em;
+  color: #666;
+  margin-top: 20px;
+}
