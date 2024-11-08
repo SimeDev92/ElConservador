@@ -1,7 +1,7 @@
 import { New } from './../interfaces/news.interface';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, Observable, switchMap, of, map } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { catchError, Observable, switchMap, of, map, tap, throwError } from 'rxjs';
 import { environments } from '../../../environments/environments';
 
 @Injectable({ providedIn: 'root' })

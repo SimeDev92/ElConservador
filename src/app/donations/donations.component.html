@@ -26,7 +26,7 @@
       </div>
 
       <div *ngIf="donationType === 'monthly'" class="donation-amounts">
-        <h3>Elige un monto para la donación mensual:</h3>
+        <h3>Elige la cantidad que deseas donar mensualmente:</h3>
         <mat-radio-group [(ngModel)]="selectedAmount">
           <mat-radio-button *ngFor="let amount of monthlyDonationAmounts" [value]="amount">
             {{ amount }}€/mes

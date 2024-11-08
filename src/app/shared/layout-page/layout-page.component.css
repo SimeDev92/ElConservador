@@ -215,8 +215,8 @@ mat-toolbar {
   }
 
   .icon-group {
-    max-width: 120px; /* Incrementar el espacio disponible */
-    gap: 10px; /* Aumentar el espacio entre iconos */
+    max-width: 120px;
+    gap: 10px;
   }
 
   .icon img {
@@ -233,7 +233,7 @@ mat-toolbar {
 .social-section {
   padding: 16px;
   background-color: rgba(255, 255, 255, 0.1);
-  margin-top: auto; /* Empuja la sección hacia abajo */
+  margin-top: auto;
 }
 
 .social-title {

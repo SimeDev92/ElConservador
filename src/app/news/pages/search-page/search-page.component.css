@@ -7,7 +7,7 @@
 .search-title {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #333;
+  color: #C60B1E
 }
 
 .search-content {
@@ -24,6 +24,32 @@
 
 .search-field {
   width: 100%;
+}
+
+.patriotic-card {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #0066CC;
+  font-weight: bold;
+}
+
+mat-list-item {
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+mat-list-item:hover {
+  background-color: #f1f3f5;
+}
+
+.news-date {
+  color: #6c757d;
+  font-size: 0.9em;
 }
 
 .selected-news {
@@ -44,6 +70,18 @@
 
 .back-button {
   margin-top: 20px;
+  background-color: #0066CC;
+  color: white;
+}
+
+.back-button:hover {
+  background-color: #003366;
+}
+
+.no-news-message {
+  text-align: center;
+  color: #666;
+  margin-top: 20px;
 }
 
 @media (min-width: 768px) {
@@ -54,4 +92,34 @@
   .search-field {
     width: 48%;
   }
+}
+
+/* Estilos adicionales para coherencia con el dashboard */
+.mat-card {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.mat-card:hover {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.mat-icon {
+  color: #FFC400;
+}
+
+.mat-list-item-content {
+  padding: 8px 0;
+}
+
+.mat-card-actions {
+  padding: 16px;
+}
+
+.donation-btn {
+  background-color: #C60B1E;
+  color: white;
+}
+
+.donation-btn:hover {
+  background-color: #b50a1a;
 }

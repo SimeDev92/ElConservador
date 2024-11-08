@@ -1,20 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { NewsService } from '../../services/news.service';
 import { New } from '../../interfaces/news.interface';
 import { Router } from '@angular/router';
-import { debounceTime, switchMap, of } from 'rxjs';
+import { debounceTime, switchMap, of, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
   styleUrls: ['./search-page.component.css']
 })
-export class SearchPageComponent {
+export class SearchPageComponent implements OnInit, OnDestroy {
   public searchForm: FormGroup;
   public news: New[] = [];
-  public selectedNew?: New;
+  public latestNews: New[] = [];
+  private dateSubscription: Subscription | null = null;
+  private searchSubscription: Subscription | null = null;
 
   constructor(
     private newsService: NewsService,
@@ -24,39 +25,76 @@ export class SearchPageComponent {
       searchInput: new FormControl(''),
       dateInput: new FormControl('')
     });
+  }
 
-    this.searchForm.get('searchInput')!.valueChanges.pipe(
+  ngOnInit() {
+    this.setupDateSearch();
+    this.setupKeywordSearch();
+    this.loadLatestNews();
+  }
+
+  ngOnDestroy() {
+    if (this.dateSubscription) {
+      this.dateSubscription.unsubscribe();
+    }
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
+  setupDateSearch() {
+    this.dateSubscription = this.searchForm.get('dateInput')!.valueChanges.pipe(
+      debounceTime(300),
+      switchMap(date => {
+        if (date) {
+          const dateString = new Date(date).toISOString().split('T')[0];
+          return this.newsService.getNewsByDate(dateString);
+        }
+        return of([]);
+      })
+    ).subscribe({
+      next: news => {
+        this.news = news;
+        console.log('Noticias por fecha:', news);
+      },
+      error: error => {
+        console.error('Error fetching news by date:', error);
+        this.news = [];
+      }
+    });
+  }
+
+  setupKeywordSearch() {
+    this.searchSubscription = this.searchForm.get('searchInput')!.valueChanges.pipe(
       debounceTime(300),
       switchMap(query => {
-        if (query && query.trim().length >= 3) {
+        if (query && query.trim() !== '') {
           return this.newsService.searchNews(query);
         }
         return of([]);
       })
-    ).subscribe(news => this.news = news);
-
-    this.searchForm.get('dateInput')!.valueChanges.pipe(
-      debounceTime(300),
-      switchMap(date => {
-        if (date) {
-          return this.newsService.getNewsByDate(date);
-        }
-        return of([]);
-      })
-    ).subscribe(news => this.news = news);
+    ).subscribe({
+      next: news => {
+        this.news = news;
+        console.log('Noticias por búsqueda:', news);
+      },
+      error: error => {
+        console.error('Error searching news:', error);
+        this.news = [];
+      }
+    });
   }
 
-  onSelectedOption(event: MatAutocompleteSelectedEvent): void {
-    const selectedNews: New = event.option.value;
-    if (!selectedNews) {
-      this.selectedNew = undefined;
-      return;
-    }
-    this.selectedNew = selectedNews;
-  }
-
-  displayFn(news: New): string {
-    return news ? news.title : '';
+  loadLatestNews() {
+    this.newsService.getLatestNews(3).subscribe(
+      news => {
+        this.latestNews = news.map(item => ({
+          ...item,
+          date: new Date(item.date)
+        }));
+      },
+      error => console.error('Error loading latest news:', error)
+    );
   }
 
   goBack(): void {
