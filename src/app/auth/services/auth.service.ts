@@ -18,7 +18,14 @@ export class AuthService {
   public authStatus = computed(() => this._authStatus());
 
   constructor() {
-    this.checkAuthStatus().subscribe();
+    this.checkAuthStatus().subscribe({
+      next: (isAuthenticated) => {
+        this._authStatus.set(isAuthenticated ? AuthStatus.authenticated : AuthStatus.notAuthenticated);
+      },
+      error: () => {
+        this._authStatus.set(AuthStatus.notAuthenticated);
+      }
+    });
   }
 
   setRedirectUrl(url: string) {
@@ -105,5 +112,32 @@ export class AuthService {
 
   getCurrentUserId(): string | null {
     return this._currentUser()?._id || null;
+  }
+
+  requestPasswordReset(email: string): Observable<boolean> {
+    const url = `${this.baseUrl}/auth/request-password-reset`;
+    const body = { email };
+
+    return this.http.post<{ message: string }>(url, body).pipe(
+      map(response => {
+        // Aquí puedes manejar la respuesta si es necesario
+        console.log(response.message);
+        return true;
+      }),
+      catchError(err => throwError(() => err.error.message))
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<boolean> {
+    const url = `${this.baseUrl}/auth/reset-password`;
+    const body = { token, newPassword };
+
+    return this.http.post<{ message: string }>(url, body).pipe(
+      map(response => {
+        console.log(response.message);
+        return true;
+      }),
+      catchError(err => throwError(() => err.error.message))
+    );
   }
 }

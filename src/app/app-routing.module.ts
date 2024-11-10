@@ -6,7 +6,8 @@ import { TermsAndConditionsPageComponent } from './shared/pages/terms-and-condit
 import { isAuthenticatedGuard } from './auth/guards/is-authenticated.guard';
 import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guard';
 import { PublicarInformacionComponent } from './shared/pages/publicar-informacion/publicar-informacion.component';
-import { SubscriptionManagementComponent } from './subscription/components/subscription-management/subscription-management.component';
+import { RequestResetPasswordComponent } from './shared/pages/request-reset-password/request-reset-password.component';
+import { ResetPasswordComponent } from './shared/pages/reset-password/reset-password.component';
 
 // dominio.com/
 const routes: Routes = [
@@ -47,6 +48,14 @@ const routes: Routes = [
   {
     path: 'subscriptions',
     loadChildren: () => import('./subscription/subscription.module').then(m => m.SubscriptionModule)
+  },
+  {
+    path: 'request-reset-password',
+    component: RequestResetPasswordComponent,
+  },
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
   {
     path: '404',

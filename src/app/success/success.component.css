@@ -51,7 +51,7 @@
 }
 
 .card-actions button[mat-raised-button] {
-  background-color: #0066CC; /* Azul oscuro */
+  background-color: #0066CC;
   color: white;
   padding: 10px 30px;
   font-size: 1.1rem;

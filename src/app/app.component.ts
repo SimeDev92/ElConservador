@@ -24,20 +24,19 @@ export class AppComponent {
   })
 
   public authStatusChangedEffect = effect (() => {
-
     switch (this.authService.authStatus()) {
       case AuthStatus.cheking:
         return;
       case AuthStatus.authenticated:
+        // Podrías redirigir a una página de inicio para usuarios autenticados si lo deseas
         return;
       case AuthStatus.notAuthenticated:
-        this.router.navigateByUrl('/news/list');
+        // No redirigir automáticamente
         return;
       case AuthStatus.registered:
         this.router.navigateByUrl('/auth/login');
         return;
     }
-
   })
 
 }
