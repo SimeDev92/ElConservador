@@ -1,0 +1,28 @@
+<div class="edit-profile-container">
+  <h2>Editar Perfil</h2>
+  <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field appearance="fill">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="profileForm.get('name')?.hasError('required')">El nombre es requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Apellidos</mat-label>
+      <input matInput formControlName="surname" required>
+      <mat-error *ngIf="profileForm.get('surname')?.hasError('required')">Apellido requerido</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Correo Electrónico</mat-label>
+      <input matInput formControlName="email" required>
+      <mat-error *ngIf="profileForm.get('email')?.hasError('required')">El correo electrónico es requerido</mat-error>
+      <mat-error *ngIf="profileForm.get('email')?.hasError('email')">Ingrese un correo electrónico válido</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="!profileForm.valid">Guardar Cambios</button>
+  </form>
+
+  <button mat-button color="accent" (click)="onChangePassword()">Cambiar Contraseña</button>
+</div>

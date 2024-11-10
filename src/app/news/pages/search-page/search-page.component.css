@@ -103,10 +103,6 @@ mat-list-item:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.mat-icon {
-  color: #FFC400;
-}
-
 .mat-list-item-content {
   padding: 8px 0;
 }

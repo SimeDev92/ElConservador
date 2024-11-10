@@ -1,5 +1,5 @@
 import { Component, OnInit, computed, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../auth/services/auth.service';
 import { NewsService } from '../news/services/news.service';
 import { SubscriptionService } from '../subscription/services/subscription.service';
@@ -21,6 +21,7 @@ export class DashboardLayoutComponent implements OnInit {
   private donationsService = inject(DonationsService);
   private router = inject(Router);
   private clipboard = inject(Clipboard);
+
   public user = computed(() => this.authService.currentUser());
   public activeSubscription: Subscription | null = null;
   public userNews: New[] = [];

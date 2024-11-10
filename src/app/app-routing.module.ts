@@ -8,6 +8,7 @@ import { isNotAuthenticatedGuard } from './auth/guards/is-not-authenticated.guar
 import { PublicarInformacionComponent } from './shared/pages/publicar-informacion/publicar-informacion.component';
 import { RequestResetPasswordComponent } from './shared/pages/request-reset-password/request-reset-password.component';
 import { ResetPasswordComponent } from './shared/pages/reset-password/reset-password.component';
+import { EditProfileComponent } from './shared/pages/edit-profile/edit-profile.component';
 
 // dominio.com/
 const routes: Routes = [
@@ -57,6 +58,12 @@ const routes: Routes = [
     path: 'reset-password',
     component: ResetPasswordComponent,
   },
+  {
+    path: 'profile/edit',
+    component: EditProfileComponent,
+    canActivate: [isAuthenticatedGuard]
+  },
+
   {
     path: '404',
     component: Error404PageComponent,

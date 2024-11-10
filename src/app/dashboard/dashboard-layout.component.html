@@ -4,52 +4,53 @@
     <p class="patriotic-subtitle text-xl text-center mb-4">Panel de Control de El Conservador</p>
 
     <div class="grid">
-<!-- Sección Paquete Activo -->
-<div class="col-12 md:col-6 lg:col-4 mb-4">
-  <mat-card class="patriotic-card h-full">
-    <mat-card-header>
-      <mat-card-title class="card-title">Paquete Activo</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <ng-container *ngIf="activeSubscription; else noSubscription">
-        <p class="mb-2">Paquete: {{ activeSubscription.packageName }}</p>
-        <p class="mb-2">Válido hasta: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
-        <p class="mb-2">Precio: {{ activeSubscription.amount }} {{ activeSubscription.currency | uppercase }}</p>
-        <p class="collaborator-code">
-          Código Colaborador:
-          <span class="code-display" (click)="copyToClipboard(activeSubscription.collaboratorCode)">
-            {{ getHiddenCode(activeSubscription.collaboratorCode) }}
-          </span>
-          <mat-icon class="copy-icon" (click)="copyToClipboard(activeSubscription.collaboratorCode)">content_copy</mat-icon>
-        </p>
-        <!-- Aviso adicional para suscripción cancelada -->
-        <p *ngIf="activeSubscription.status === 'canceled'" class="subscription-status canceled">
-          <mat-icon>cancel</mat-icon> Suscripción Cancelada (Activa hasta la fecha de fin)
-        </p>
-      </ng-container>
-      <ng-template #noSubscription>
-        <p>No tienes ningún paquete activo</p>
-      </ng-template>
-    </mat-card-content>
-    <br>
-    <mat-card-actions class="text-center">
-      <ng-container *ngIf="activeSubscription; else becomeCollaboratorBtn">
-        <!-- Botón Gestionar Suscripción sin deshabilitar -->
+      <!-- Sección Paquete Activo -->
+      <div class="col-12 md:col-6 lg:col-4 mb-4">
+        <mat-card class="patriotic-card h-full">
+          <mat-card-header>
+            <mat-card-title class="card-title">Paquete Activo</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <ng-container *ngIf="activeSubscription; else noSubscription">
+              <p class="mb-2">Paquete: {{ activeSubscription.packageName }}</p>
+              <p class="mb-2">Válido hasta: {{ activeSubscription.endDate | date:'dd/MM/yyyy' }}</p>
+              <p class="mb-2">Precio: {{ activeSubscription.amount }} {{ activeSubscription.currency | uppercase }}</p>
+              <p class="collaborator-code">
+                Código Colaborador:
+                <span class="code-display" (click)="copyToClipboard(activeSubscription.collaboratorCode)">
+                  {{ getHiddenCode(activeSubscription.collaboratorCode) }}
+                </span>
+                <mat-icon class="copy-icon"
+                  (click)="copyToClipboard(activeSubscription.collaboratorCode)">content_copy</mat-icon>
+              </p>
+              <!-- Aviso adicional para suscripción cancelada -->
+              <p *ngIf="activeSubscription.status === 'canceled'" class="subscription-status canceled">
+                <mat-icon>cancel</mat-icon> Suscripción Cancelada (Activa hasta la fecha de fin)
+              </p>
+            </ng-container>
+            <ng-template #noSubscription>
+              <p>No tienes ningún paquete activo</p>
+            </ng-template>
+          </mat-card-content>
+          <br>
+          <mat-card-actions class="text-center">
+            <ng-container *ngIf="activeSubscription; else becomeCollaboratorBtn">
+              <!-- Botón Gestionar Suscripción sin deshabilitar -->
         <button
           mat-raised-button
           class="manage-subscription-btn"
           (click)="onManageSubscription()">
-          Gestionar Suscripción
-        </button>
-      </ng-container>
-      <ng-template #becomeCollaboratorBtn>
-        <button mat-raised-button class="publish-btn" routerLink="/packages">
-          Conviértete en Colaborador
-        </button>
-      </ng-template>
-    </mat-card-actions>
-  </mat-card>
-</div>
+                Gestionar Suscripción
+              </button>
+            </ng-container>
+            <ng-template #becomeCollaboratorBtn>
+              <button mat-raised-button class="publish-btn" routerLink="/packages">
+                Conviértete en Colaborador
+              </button>
+            </ng-template>
+          </mat-card-actions>
+        </mat-card>
+      </div>
 
 
       <!-- Sección Acciones Rápidas -->
@@ -109,9 +110,9 @@
           </mat-card-content>
           <mat-card-actions class="text-center">
             <button mat-raised-button
-                    [ngClass]="{'donation-btn': userNews.length > 0, 'publish-btn': userNews.length === 0}"
-                    [routerLink]="userNews.length > 0 ? null : '/packages'"
-                    (click)="userNews.length > 0 ? loadMoreUserNews() : null">
+              [ngClass]="{'donation-btn': userNews.length > 0, 'publish-btn': userNews.length === 0}"
+              [routerLink]="userNews.length > 0 ? null : '/packages'"
+              (click)="userNews.length > 0 ? loadMoreUserNews() : null">
               {{ userNews.length > 0 ? 'Cargar Más' : '¡Publica En El Conservador!' }}
             </button>
           </mat-card-actions>
@@ -152,7 +153,8 @@
               <div *ngFor="let collaboration of activeCollaborations" class="collaboration-item">
                 <mat-card class="collaboration-card mb-3">
                   <mat-card-content>
-                    <p class="mb-2"><strong>Cantidad:</strong> {{ collaboration.amount }} {{ collaboration.currency | uppercase }}</p>
+                    <p class="mb-2"><strong>Cantidad:</strong> {{ collaboration.amount }} {{ collaboration.currency |
+                      uppercase }}</p>
                     <p class="mb-2"><strong>Fecha de Inicio:</strong> {{ collaboration.date | date:'dd/MM/yyyy' }}</p>
                     <p class="mb-2"><strong>Estado:</strong> {{ collaboration.status }}</p>
                   </mat-card-content>

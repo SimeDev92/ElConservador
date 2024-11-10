@@ -12,6 +12,7 @@ import { CategoryTranslatePipe } from './pipes/category-translate.pipe';
 import { PublicarInformacionComponent } from './pages/publicar-informacion/publicar-informacion.component';
 import { RequestResetPasswordComponent } from './pages/request-reset-password/request-reset-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
+import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ResetPasswordComponent } from './pages/reset-password/reset-password.co
     PublicarInformacionComponent,
     RequestResetPasswordComponent,
     ResetPasswordComponent,
+    EditProfileComponent
   ],
   imports: [
     CommonModule,

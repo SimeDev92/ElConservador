@@ -140,4 +140,20 @@ export class AuthService {
       catchError(err => throwError(() => err.error.message))
     );
   }
+
+  updateProfile(id: string, name: string, surname: string, email: string): Observable<boolean> {
+    const url = `${this.baseUrl}/auth/${id}`;
+    const body = { name, surname, email };
+
+    return this.http.patch<User>(url, body).pipe(
+      map(user => {
+        this._currentUser.set(user);
+        return true;
+      }),
+      catchError(err => {
+        console.error('Error updating profile', err);
+        return of(false);
+      })
+    );
+  }
 }
