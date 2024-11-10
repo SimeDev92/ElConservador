@@ -1,29 +1,26 @@
-import { Component, computed, effect, inject } from '@angular/core';
+import { Component, computed, effect, inject, OnInit } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/interfaces';
 import { Router } from '@angular/router';
+import { VisitsService } from './visits.service';  // Asegúrate de importar el servicio de visitas
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'el-conservador-app';
 
-  private  authService =  inject( AuthService );
-  private router = inject( Router)
-  public finishedAuthCheck = computed<boolean>( () => {
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private visitsService = inject(VisitsService);  // Inyectar el servicio de visitas
 
-    if( this.authService.authStatus() === AuthStatus.cheking ) {
-      return false;
-    }
+  public finishedAuthCheck = computed<boolean>(() => {
+    return this.authService.authStatus() !== AuthStatus.cheking;
+  });
 
-    return true;
-
-  })
-
-  public authStatusChangedEffect = effect (() => {
+  public authStatusChangedEffect = effect(() => {
     switch (this.authService.authStatus()) {
       case AuthStatus.cheking:
         return;
@@ -37,6 +34,9 @@ export class AppComponent {
         this.router.navigateByUrl('/auth/login');
         return;
     }
-  })
+  });
 
+  ngOnInit(): void {
+    this.visitsService.incrementVisits();
+  }
 }
