@@ -9,6 +9,8 @@ import { PublicarInformacionComponent } from './shared/pages/publicar-informacio
 import { RequestResetPasswordComponent } from './shared/pages/request-reset-password/request-reset-password.component';
 import { ResetPasswordComponent } from './shared/pages/reset-password/reset-password.component';
 import { EditProfileComponent } from './shared/pages/edit-profile/edit-profile.component';
+import { AboutPageComponent } from './shared/pages/about-page/about-page.component';
+import { ContactPageComponent } from './shared/pages/contact-page/contact-page.component';
 
 // dominio.com/
 const routes: Routes = [
@@ -33,6 +35,14 @@ const routes: Routes = [
   {
     path: 'packages',
     loadChildren: () => import('./packages/packages.module').then(m => m.PackagesModule)
+  },
+  {
+    path: 'acerca-de',
+    component: AboutPageComponent,
+  },
+  {
+    path: 'contacto',
+    component: ContactPageComponent,
   },
   {
     path: 'politica-de-privacidad',

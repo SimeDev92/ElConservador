@@ -9,13 +9,33 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
+}
+
+.footer-escudo {
+  width: 40px;
+  height: auto;
+}
+
+.footer-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: white;
 }
 
 .footer-links {
   display: flex;
   gap: 15px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .footer-links a {
@@ -28,10 +48,9 @@
 }
 
 .social-media {
-  margin-top: 15px; /* Añade un margen superior */
   display: flex;
   gap: 15px;
-  justify-content: center; /* Centra los iconos */
+  justify-content: center;
 }
 
 .social-media mat-icon {
@@ -46,12 +65,19 @@
 /* Ajustes específicos para la vista móvil */
 @media (max-width: 600px) {
   .footer-content {
-    flex-direction: column;
-    align-items: center;
+    gap: 15px;
   }
 
   .footer-links {
     flex-direction: column;
     text-align: center;
+  }
+
+  .footer-title {
+    font-size: 1rem;
+  }
+
+  .footer-escudo {
+    width: 30px;
   }
 }

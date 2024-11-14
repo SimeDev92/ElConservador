@@ -1,33 +1,53 @@
-.legal-container {
-  background-color: #fff;
-  border: 2px solid #C60B1E;
+.privacy-policy-container {
+  max-width: 800px;
+  margin: 0 auto;
   padding: 20px;
-  margin: 20px 0;
-  font-family: 'Georgia', serif;
-  color: #333;
-  text-align: left; /* Alinear texto a la izquierda */
-  font-size: small; /* Tamaño de letra pequeño */
+  font-family: 'Playfair Display', serif;
 }
 
-.patriotic-title {
-  color: #C60B1E; /* Color rojo */
-  border-bottom: 2px solid #FFC400; /* Línea amarilla debajo del título */
-  padding-bottom: 10px;
+.privacy-title {
+  color: #C60B1E;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.small-heading {
-  font-size: smaller; /* Hacer h2 más pequeño */
+.policy-section {
+  margin-bottom: 30px;
 }
 
-.legal-container h2 {
-  color: #0038A8; /* Color azul */
+.policy-section h2 {
+  color: #0066CC;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
 }
 
-.legal-container p {
+.policy-section p, .policy-section ul {
+  font-size: 1.1rem;
   line-height: 1.6;
+  color: #333;
 }
 
-.legal-container ul {
-  margin-left: 20px; /* Sangría para listas */
-  line-height: 1.4; /* Espaciado entre líneas en listas */
+.policy-section ul {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+.policy-section li {
+  margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .privacy-title {
+    font-size: 2rem;
+  }
+
+  .policy-section h2 {
+    font-size: 1.5rem;
+  }
+
+  .policy-section p, .policy-section ul {
+    font-size: 1rem;
+  }
 }

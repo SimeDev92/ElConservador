@@ -56,15 +56,21 @@ mat-toolbar {
 
 /* ---------- Logo y Título ---------- */
 .escudo {
-  height: 40px;
-  margin-right: 10px;
+  width: 45px;
+  height: auto;
 }
 
 .site-title {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 800;
   color: black;
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Alinea los elementos verticalmente */
+}
+.site-title img {
+  margin-right: 5px; /* Añade un pequeño espacio entre el logo y el texto */
+  margin-left: 5px; /* Añade un pequeño espacio entre "EL" y el logo */
 }
 
 /* ---------- Iconos Personalizados (Flexbox) ---------- */
@@ -88,7 +94,6 @@ mat-toolbar {
   transform: scale(1.1);
 }
 
-/* Menú hamburguesa personalizado con tres barras */
 .hamburger-menu {
   display: flex;
   flex-direction: column;
@@ -174,11 +179,15 @@ mat-toolbar {
   }
 
   .site-title {
-    font-size: calc(0.8rem + 1vw);
+    font-size: calc(0.7rem + 1vw);
+  }
+  .site-title img {
+    margin-right: 3px;
+    margin-left: 3px;
   }
 
   .escudo {
-    height: 40px;
+    height: 35px;
   }
 
   .icon-group {
@@ -207,13 +216,17 @@ mat-toolbar {
   }
 
   .site-title {
-    font-size: calc(0.7rem + 1vw);
+    font-size: calc(0.5rem + 1vw);
   }
 
+  .site-title img {
+    margin-right: 2px;
+    margin-left: 2px;
+  }
   .escudo {
-    height: 35px;
+    width: 25px;
+    height: auto;
   }
-
   .icon-group {
     max-width: 120px;
     gap: 10px;
@@ -268,6 +281,3 @@ mat-toolbar {
   transform: scale(1.1);
   transition: transform 0.3s ease;
 }
-
-
-

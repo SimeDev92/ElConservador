@@ -12,8 +12,7 @@ import { Donation } from './interfaces/donation.interface';
 })
 export class DonationsService {
   private stripePromise = loadStripe(environments.stripePublicKeyTest);
-  private apiUrl = `${environments.baseUrl}/donations`; // Cambiado a /donations
-
+  private apiUrl = `${environments.baseUrl}/donations`;
   constructor(
     private http: HttpClient,
     private authService: AuthService

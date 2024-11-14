@@ -2,7 +2,8 @@ import { Component, computed, effect, inject, OnInit } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/interfaces';
 import { Router } from '@angular/router';
-import { VisitsService } from './visits.service';  // Asegúrate de importar el servicio de visitas
+import { VisitsService } from './visits.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +15,12 @@ export class AppComponent implements OnInit {
 
   private authService = inject(AuthService);
   private router = inject(Router);
-  private visitsService = inject(VisitsService);  // Inyectar el servicio de visitas
+  private visitsService = inject(VisitsService);
+
+  isLoading = true;
 
   public finishedAuthCheck = computed<boolean>(() => {
-    return this.authService.authStatus() !== AuthStatus.cheking;
+    return this.authService.authStatus() !== AuthStatus.cheking && !this.isLoading;
   });
 
   public authStatusChangedEffect = effect(() => {
@@ -38,5 +41,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.visitsService.incrementVisits();
+
+    // Simula un retraso de 3 segundos para la pantalla de carga
+    timer(3000).subscribe(() => {
+      this.isLoading = false;
+    });
   }
 }

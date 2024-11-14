@@ -13,6 +13,8 @@ import { PublicarInformacionComponent } from './pages/publicar-informacion/publi
 import { RequestResetPasswordComponent } from './pages/request-reset-password/request-reset-password.component';
 import { ResetPasswordComponent } from './pages/reset-password/reset-password.component';
 import { EditProfileComponent } from './pages/edit-profile/edit-profile.component';
+import { AboutPageComponent } from './pages/about-page/about-page.component';
+import { ContactPageComponent } from './pages/contact-page/contact-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { EditProfileComponent } from './pages/edit-profile/edit-profile.componen
     PublicarInformacionComponent,
     RequestResetPasswordComponent,
     ResetPasswordComponent,
-    EditProfileComponent
+    EditProfileComponent,
+    AboutPageComponent,
+    ContactPageComponent
   ],
   imports: [
     CommonModule,

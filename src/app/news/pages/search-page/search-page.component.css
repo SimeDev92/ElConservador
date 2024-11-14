@@ -68,8 +68,13 @@ mat-list-item:hover {
   color: #555;
 }
 
-.back-button {
+.button-container {
+  display: flex;
+  justify-content: center;
   margin-top: 20px;
+}
+
+.back-button {
   background-color: #0066CC;
   color: white;
 }

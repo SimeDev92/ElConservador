@@ -8,7 +8,6 @@ import { environments } from '../environments/environments';
 export class VisitsService {
   private apiUrl = `${environments.baseUrl}/visits`;
 
-
   constructor(
     private http: HttpClient,
   ) {}

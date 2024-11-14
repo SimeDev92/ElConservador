@@ -8,5 +8,4 @@ export interface Donation {
   stripeSessionId: string;
   stripeSubscriptionId?: string;
   status: string;
-
 }
