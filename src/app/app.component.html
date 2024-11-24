@@ -1,9 +1,9 @@
-<div class="loading-screen" *ngIf="isLoading">
-  <div class="loading-content">
-    <img src="assets/pruebaTrue.png" alt="Logo El Conservador" class="loading-logo">
-    <div class="loading-pulse"></div>
-    <p class="loading-text">Cargando El Conservador...</p>
-  </div>
+<div *ngIf="isLoading" class="loading-screen">
+  <mat-progress-spinner
+    [color]="spinnerColor"
+    mode="indeterminate"
+    diameter="100">
+  </mat-progress-spinner>
 </div>
 
 <app-layout-page *ngIf="!isLoading">

@@ -3,7 +3,6 @@ import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/interfaces';
 import { Router } from '@angular/router';
 import { VisitsService } from './visits.service';
-import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,24 +16,29 @@ export class AppComponent implements OnInit {
   private router = inject(Router);
   private visitsService = inject(VisitsService);
 
+  // Colores del spinner
+  private colors = ['#FFC400', '#C60B1E'];
+  spinnerColor = this.colors[0];
   isLoading = true;
 
   public finishedAuthCheck = computed<boolean>(() => {
-    return this.authService.authStatus() !== AuthStatus.cheking && !this.isLoading;
+    return this.authService.authStatus() !== AuthStatus.cheking;
   });
 
   public authStatusChangedEffect = effect(() => {
     switch (this.authService.authStatus()) {
       case AuthStatus.cheking:
+        this.isLoading = true;
         return;
       case AuthStatus.authenticated:
-        // Podrías redirigir a una página de inicio para usuarios autenticados si lo deseas
+        this.isLoading = false;
         return;
       case AuthStatus.notAuthenticated:
-        // No redirigir automáticamente
+        this.isLoading = false;
         return;
       case AuthStatus.registered:
         this.router.navigateByUrl('/auth/login');
+        this.isLoading = false;
         return;
     }
   });
@@ -42,9 +46,11 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.visitsService.incrementVisits();
 
-    // Simula un retraso de 3 segundos para la pantalla de carga
-    timer(3000).subscribe(() => {
-      this.isLoading = false;
-    });
+    setInterval(() => {
+      if (this.isLoading) {
+        this.spinnerColor = this.spinnerColor === this.colors[0] ? this.colors[1] : this.colors[0];
+      }
+    }, 500);
   }
+
 }
