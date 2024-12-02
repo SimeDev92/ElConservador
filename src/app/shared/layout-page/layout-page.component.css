@@ -220,12 +220,14 @@ mat-toolbar {
     font-size: calc(0.5rem + 1vw);
   }
 
+  /**
+  ajustar aquí **/
   .site-title img {
-    margin-right: 2px;
-    margin-left: 2px;
+    margin-right: -8px;
+    margin-left: -3px;
   }
   .escudo {
-    width: 35px;
+    width: 55px;
     height: auto;
   }
   .icon-group {
