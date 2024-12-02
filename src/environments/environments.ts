@@ -6,7 +6,7 @@ export const environments = {
   production: false,
   useTestProducts: true,
   facebookUrl: 'https://www.facebook.com/profile.php?id=61567155161620',
-  twitterUrl: 'https://x.com/ConservadorTest',
+  twitterUrl: 'https://x.com/Conservador24h',
   telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8',
 
 
