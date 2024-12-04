@@ -8,7 +8,7 @@ import { environments } from '../../../../environments/environments';
   templateUrl: './contact-page.component.html',
   styleUrls: ['./contact-page.component.css']
 })
-export class ContactPageComponent implements OnInit {
+export class ContactPageComponent {
   contactData = {
     name: '',
     email: '',
@@ -25,17 +25,8 @@ export class ContactPageComponent implements OnInit {
     private domSanitizer: DomSanitizer
   ) {}
 
-  ngOnInit() {
-    this.matIconRegistry.addSvgIcon(
-      'x-twitter',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/x-twitter.svg')
-    );
-  }
-
   onSubmit() {
-    // Implementa aquí la lógica de envío del formulario
     console.log('Formulario enviado', this.contactData);
-    // Resetear el formulario después de enviar
     this.contactData = {
       name: '',
       email: '',

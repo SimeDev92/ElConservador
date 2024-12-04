@@ -26,6 +26,12 @@
   font-size: 1.1rem;
   line-height: 1.6;
   color: #333;
+  word-wrap: break-word;
+}
+.contact-section a {
+  color: #0066CC;
+  text-decoration: none;
+  word-break: break-all;
 }
 
 .full-width {
@@ -50,6 +56,17 @@
   margin-right: 5px;
 }
 
+.social-links a .x-icon {
+  background-color: #0066CC;
+  padding: 2px;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 button[type="submit"] {
   background-color: #0066CC;
   color: white;
@@ -68,4 +85,37 @@ button[type="submit"]:hover {
 button[type="submit"]:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+
+ .contact-title {
+    font-size: 2rem;
+ }
+
+ .contact-section h2 {
+    font-size: 1.5rem;
+ }
+
+ .social-links {
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .social-links a {
+    margin-bottom:10px;
+ }
+
+ button[type="submit"] {
+    width:100%;
+ }
+
+ .contact-section p {
+  font-size: 1rem;
+}
+
+.contact-section a {
+  font-size: 0.9rem;
+}
 }

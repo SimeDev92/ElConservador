@@ -3,13 +3,10 @@
 }
 
 .news-image {
+  max-height: 400px;
   width: 100%;
-  height: 400px;
-  object-fit: contain;
+  object-fit: cover;
   background-color: #f0f0f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .news-title {
@@ -32,12 +29,14 @@
 .news-metadata {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 20px;
   color: #666;
 }
 
 .news-metadata > * {
   margin-right: 10px;
+  margin-bottom: 5px;
 }
 
 .news-content {
@@ -57,7 +56,7 @@
   margin-right: 8px;
   margin-bottom: 8px;
   font-size: 0.9em;
-  background-color: #FFC400; /* Amarillo de la bandera */
+  background-color: #FFC400;
   color: #333;
   border-radius: 16px;
 }
@@ -77,31 +76,28 @@
 }
 
 .ad-card {
-  background-image: url('/assets/espana_bandera.png');
-  background-size: cover;
-  background-position: center;
-  text-align: center;
-  padding: 20px;
-  height: 200px;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   border-radius: 8px;
+  overflow: hidden;
+  background-color: #f0f0f0;
 }
 
+.ad-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-.ad-card .ad-content {
-  background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+.ad-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 10px;
-  border-radius: 8px;
-}
-
-.ad-card p {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #333;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
   font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
 .loading-spinner {
@@ -112,7 +108,7 @@
 }
 
 button.compartir {
-  background-color: #C60B1E; /* Rojo patriótico */
+  background-color: #C60B1E;
   color: #ffffff;
 }
 
@@ -121,10 +117,61 @@ button.compartir:hover {
 }
 
 button.volver-inicio {
-  background-color: #0066CC; /* Azul oscuro */
+  background-color: #0066CC;
   color: white;
 }
 
 button.volver-inicio:hover {
   background-color: #003366;
+}
+
+@media (min-width: 1024px) {
+  .ad-card {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .ad-card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .news-title {
+    font-size: 1.8rem;
+  }
+
+  .news-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .news-content {
+    font-size: 1rem;
+  }
+
+  .news-image {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .news-image {
+    max-height: 200px;
+  }
+
+  .news-title {
+    font-size: 1.5rem;
+  }
+
+  .news-subtitle {
+    font-size: 1rem;
+  }
+
+  .news-content {
+    font-size: 0.9rem;
+  }
+  .ad-card {
+    max-width: 100%;
+  }
 }

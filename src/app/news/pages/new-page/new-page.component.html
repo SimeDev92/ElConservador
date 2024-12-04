@@ -13,13 +13,17 @@
             <span class="author">{{ authorName }}</span>
             <mat-icon>event</mat-icon>
             <span class="date">{{ newsItem.date | date: 'dd/MM/yyyy' }}</span>
-
             <mat-icon>category</mat-icon>
             <span class="category">{{ newsItem.category | categoryTranslate }}</span>
           </div>
           <p class="news-content">{{ newsItem.content }}</p>
           <div class="news-tags">
             <span *ngFor="let tag of newsItem.tags" class="tag">#{{ tag }}</span>
+          </div>
+          <div class="share-container">
+            <button mat-fab class="compartir share-button" [matMenuTriggerFor]="shareMenu" aria-label="Compartir">
+              <mat-icon>share</mat-icon>
+            </button>
           </div>
         </mat-card-content>
       </mat-card>
@@ -29,12 +33,6 @@
         <mat-icon>arrow_back</mat-icon>
         Volver al inicio
       </button>
-
-      <div class="share-container mt-3">
-        <button mat-fab class="compartir share-button" [matMenuTriggerFor]="shareMenu" aria-label="Compartir">
-          <mat-icon>share</mat-icon>
-        </button>
-      </div>
 
       <mat-menu #shareMenu="matMenu">
         <button mat-menu-item (click)="shareOnFacebook()">
@@ -52,15 +50,12 @@
           <mat-icon>telegram</mat-icon>
           <span>Telegram</span>
         </button>
-
       </mat-menu>
 
       <mat-card class="ad-card mt-3">
-        <div class="ad-content">
-          <p>Aquí tu anuncio</p>
-        </div>
-      </mat-card>
+        <img src="/assets/olo-editorial.jpeg" alt="Anuncio" class="ad-image">
 
+      </mat-card>
     </div>
   </div>
 </ng-container>
