@@ -15,7 +15,6 @@ export class CardComponent implements OnInit {
   constructor(
     private snackBar: MatSnackBar,
     private router: Router,
-
   ) {}
 
   ngOnInit(): void {
@@ -23,41 +22,40 @@ export class CardComponent implements OnInit {
   }
 
   searchByTag(tag: string, event: Event) {
-    event.stopPropagation(); // Evita que el clic se propague a la tarjeta
+    event.stopPropagation();
     this.router.navigate(['/news'], { queryParams: { search: tag } });
   }
 
   shareOnWhatsApp(event: Event) {
     event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/share/${this.new._id}`);
+    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
     const text = encodeURIComponent(this.new.title);
     window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
   }
 
   shareOnFacebook(event: Event) {
     event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/share/${this.new._id}`);
-    const text = encodeURIComponent(this.new.title);
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
   }
 
   shareOnTwitter(event: Event) {
     event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/share/${this.new._id}`);
+    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
     const text = encodeURIComponent(this.new.title);
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
   }
 
   shareOnTelegram(event: Event) {
     event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/share/${this.new._id}`);
+    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
     const text = encodeURIComponent(this.new.title);
     window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
   }
 
   copyLink(event: Event) {
     event.stopPropagation();
-    const url = `${environments.baseUrl}/news/share/${this.new._id}`;
+    const url = `${environments.baseUrl}/news/${this.new._id}`;
     navigator.clipboard.writeText(url).then(() => {
       this.snackBar.open('Enlace copiado al portapapeles', 'Cerrar', { duration: 3000 });
     }).catch(err => {
