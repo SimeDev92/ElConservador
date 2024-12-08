@@ -26,7 +26,6 @@ export class ContactPageComponent {
   ) {}
 
   onSubmit() {
-    console.log('Formulario enviado', this.contactData);
     this.contactData = {
       name: '',
       email: '',

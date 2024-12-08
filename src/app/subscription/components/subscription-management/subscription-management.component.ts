@@ -37,7 +37,6 @@ export class SubscriptionManagementComponent implements OnInit {
       this.subscriptionService.getActiveSubscription(this.userId).subscribe(
         subscription => {
           this.activeSubscription = subscription;
-          console.log('Active subscription loaded:', this.activeSubscription);
         },
         error => console.error('Error loading active subscription:', error)
       );
@@ -54,7 +53,6 @@ export class SubscriptionManagementComponent implements OnInit {
 
   cancelSubscription() {
     if (this.activeSubscription && this.activeSubscription.stripeSubscriptionId) {
-      console.log('Stripe Subscription ID:', this.activeSubscription.stripeSubscriptionId);
       this.subscriptionService.cancelSubscription(this.activeSubscription.stripeSubscriptionId).subscribe(
         () => {
           this.activeSubscription = null;

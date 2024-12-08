@@ -55,7 +55,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: news => {
         this.news = news;
-        console.log('Noticias por fecha:', news);
       },
       error: error => {
         console.error('Error fetching news by date:', error);
@@ -76,7 +75,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ).subscribe({
       next: news => {
         this.news = news;
-        console.log('Noticias por búsqueda:', news);
       },
       error: error => {
         console.error('Error searching news:', error);

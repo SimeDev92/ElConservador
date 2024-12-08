@@ -120,8 +120,6 @@ export class AuthService {
 
     return this.http.post<{ message: string }>(url, body).pipe(
       map(response => {
-        // Aquí puedes manejar la respuesta si es necesario
-        console.log(response.message);
         return true;
       }),
       catchError(err => throwError(() => err.error.message))
@@ -134,7 +132,6 @@ export class AuthService {
 
     return this.http.post<{ message: string }>(url, body).pipe(
       map(response => {
-        console.log(response.message);
         return true;
       }),
       catchError(err => throwError(() => err.error.message))
