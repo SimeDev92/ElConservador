@@ -11,7 +11,7 @@ export const environments = {
 
 
   contactEmail: 'info@elconservador.com',
-  centinelaBotUrl: 'https://t.me/Centinela_QA_bot'
+  centinelaBotUrl: 'https://t.me/Centinela_ElConservador_bot'
 }
 
 

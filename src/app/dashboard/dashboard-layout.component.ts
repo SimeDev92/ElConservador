@@ -130,7 +130,7 @@ export class DashboardLayoutComponent implements OnInit {
   }
 
   openCentinela() {
-    window.open('https://t.me/Centinela_QA_bot');
+    window.open('https://t.me/Centinela_ElConservador_bot');
   }
 
   loadActiveCollaborations() {
