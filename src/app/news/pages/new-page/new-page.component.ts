@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { New } from '../../interfaces/news.interface';
 import { NewsService } from '../../services/news.service';
+import { environments } from '../../../../environments/environments';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-page',
@@ -11,7 +13,7 @@ import { NewsService } from '../../services/news.service';
   styleUrls: ['./new-page.css']
 })
 export class NewPageComponent implements OnInit {
-
+  @Input() public new!: New;
   public newsItem?: New;
   public authorName: string = '';
 
@@ -28,7 +30,6 @@ export class NewPageComponent implements OnInit {
           return this.newsService.getNewById(id);
         }),
         tap(newsItem => {
-
           if (!newsItem) {
             this.router.navigate(['/news']);
             return;
@@ -56,26 +57,56 @@ export class NewPageComponent implements OnInit {
     this.router.navigateByUrl('/news');
   }
 
-  shareOnFacebook(): void {
-    const url = encodeURIComponent(window.location.href);
+  private generateBackendShareableUrl(): string {
+    return `${environments.baseUrl}/news/share/${this.newsItem?._id}`; // Asegúrate de que apunta al backend
+  }
+
+  shareOnFacebook(event: Event): void {
+    event.stopPropagation();
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
   }
 
-  shareOnTwitter(): void {
-    const url = encodeURIComponent(window.location.href);
+  shareOnTwitter(event: Event): void {
+    event.stopPropagation();
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     const text = encodeURIComponent(this.newsItem?.title || '');
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
   }
 
-  shareOnWhatsApp(): void {
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(this.newsItem?.title || '');
-    window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
+  shareOnWhatsApp(event: Event): void {
+    event.stopPropagation();
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
+    window.open(`https://wa.me/?text=${url}`, '_blank');
   }
 
-  shareOnTelegram(): void {
-    const url = encodeURIComponent(window.location.href);
+  shareOnTelegram(event: Event): void {
+    event.stopPropagation();
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     const text = encodeURIComponent(this.newsItem?.title || '');
     window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
+  }
+
+  copyLink(event: Event): void {
+    event.stopPropagation();
+    const url = this.generateBackendShareableUrl();
+    navigator.clipboard.writeText(url).then(() => {
+      Swal.fire({
+        title: 'Enlace copiado',
+        text: 'El enlace se ha copiado al portapapeles con éxito.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007BFF',
+      });
+    }).catch(err => {
+      console.error('Error al copiar el enlace: ', err);
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo copiar el enlace. Intenta de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007BFF',
+      });
+    });
   }
 }

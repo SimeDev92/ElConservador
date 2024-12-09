@@ -35,22 +35,28 @@
       </button>
 
       <mat-menu #shareMenu="matMenu">
-        <button mat-menu-item (click)="shareOnFacebook()">
+        <button mat-menu-item (click)="shareOnFacebook($event)">
           <mat-icon>facebook</mat-icon>
           <span>Facebook</span>
         </button>
-        <button mat-menu-item (click)="shareOnTwitter()">
+        <button mat-menu-item (click)="shareOnTwitter($event)">
           <mat-icon>X</mat-icon>
           <span>Twitter</span>
         </button>
-        <button mat-menu-item (click)="shareOnWhatsApp()">
-          <mat-icon svgIcon="whatsapp"></mat-icon> WhatsApp
+        <button mat-menu-item (click)="shareOnWhatsApp($event)">
+          <mat-icon svgIcon="whatsapp"></mat-icon>
+          <span>WhatsApp</span>
         </button>
-        <button mat-menu-item (click)="shareOnTelegram()">
+        <button mat-menu-item (click)="shareOnTelegram($event)">
           <mat-icon>telegram</mat-icon>
           <span>Telegram</span>
         </button>
+        <button mat-menu-item (click)="copyLink($event)">
+          <mat-icon>link</mat-icon>
+          <span>Copiar enlace</span>
+        </button>
       </mat-menu>
+
 
       <mat-card class="ad-card mt-3">
         <img src="/assets/olo-editorial.jpeg" alt="Anuncio" class="ad-image">

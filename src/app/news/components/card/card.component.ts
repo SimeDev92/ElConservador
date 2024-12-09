@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { New } from './../../interfaces/news.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { environments } from '../../../../environments/environments';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'news-new-card',
@@ -13,7 +13,6 @@ export class CardComponent implements OnInit {
   @Input() public new!: New;
 
   constructor(
-    private snackBar: MatSnackBar,
     private router: Router
   ) {}
 
@@ -60,10 +59,22 @@ export class CardComponent implements OnInit {
     event.stopPropagation();
     const url = this.generateBackendShareableUrl();
     navigator.clipboard.writeText(url).then(() => {
-      this.snackBar.open('Enlace copiado al portapapeles', 'Cerrar', { duration: 3000 });
+      Swal.fire({
+        title: 'Enlace copiado',
+        text: 'El enlace se ha copiado al portapapeles con éxito.',
+        icon: 'success',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007BFF',
+      });
     }).catch(err => {
       console.error('Error al copiar el enlace: ', err);
-      this.snackBar.open('Error al copiar el enlace', 'Cerrar', { duration: 3000 });
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo copiar el enlace. Intenta de nuevo.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+        confirmButtonColor: '#007BFF',
+      });
     });
   }
 }
