@@ -3,7 +3,6 @@ import { New } from './../../interfaces/news.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { environments } from '../../../../environments/environments';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'news-new-card',
@@ -15,65 +14,51 @@ export class CardComponent implements OnInit {
 
   constructor(
     private snackBar: MatSnackBar,
-    private router: Router,
-    private http: HttpClient
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    if (!this.new) throw Error('New property is required');
+    if (!this.new) throw new Error('New property is required');
   }
 
-  searchByTag(tag: string, event: Event) {
+  searchByTag(tag: string, event: Event): void {
     event.stopPropagation();
     this.router.navigate(['/news'], { queryParams: { search: tag } });
   }
 
-  shareOnWhatsApp(event: Event) {
-    event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
-    const text = encodeURIComponent(this.new.title);
-    window.open(`https://wa.me/?text=${text} ${url}`, '_blank');
+  private generateShareableUrl(): string {
+    return `${environments.frontendUrl}/news/${this.new._id}`; // Asegúrate de que apunta al frontend
   }
 
-  async shareOnFacebook(event: Event) {
+  shareOnWhatsApp(event: Event): void {
     event.stopPropagation();
-    try {
-      const response = await this.http.post<{success: boolean, result: any}>(
-        `${environments.baseUrl}/facebook/share-news`,
-        {
-          newsId: this.new._id,
-          imageUrl: this.new.imgUrl
-        }
-      ).toPromise();
-
-      if (response && response.success) {
-        this.snackBar.open('Noticia compartida en Facebook con éxito', 'Cerrar', { duration: 3000 });
-      } else {
-        throw new Error('La respuesta del servidor no indica éxito');
-      }
-    } catch (error) {
-      console.error('Error al compartir en Facebook:', error);
-      this.snackBar.open('Error al compartir en Facebook', 'Cerrar', { duration: 3000 });
-    }
+    const url = encodeURIComponent(this.generateShareableUrl());
+    window.open(`https://wa.me/?text=${url}`, '_blank');
   }
 
-  shareOnTwitter(event: Event) {
+  shareOnTwitter(event: Event): void {
     event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
+    const url = encodeURIComponent(this.generateShareableUrl());
     const text = encodeURIComponent(this.new.title);
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
   }
 
-  shareOnTelegram(event: Event) {
+  shareOnTelegram(event: Event): void {
     event.stopPropagation();
-    const url = encodeURIComponent(`${environments.baseUrl}/news/${this.new._id}`);
+    const url = encodeURIComponent(this.generateShareableUrl());
     const text = encodeURIComponent(this.new.title);
     window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
   }
 
-  copyLink(event: Event) {
+  shareOnFacebook(event: Event): void {
     event.stopPropagation();
-    const url = `${environments.baseUrl}/news/${this.new._id}`;
+    const url = encodeURIComponent(this.generateShareableUrl());
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+  }
+
+  copyLink(event: Event): void {
+    event.stopPropagation();
+    const url = this.generateShareableUrl();
     navigator.clipboard.writeText(url).then(() => {
       this.snackBar.open('Enlace copiado al portapapeles', 'Cerrar', { duration: 3000 });
     }).catch(err => {
