@@ -26,39 +26,39 @@ export class CardComponent implements OnInit {
     this.router.navigate(['/news'], { queryParams: { search: tag } });
   }
 
-  private generateShareableUrl(): string {
-    return `${environments.frontendUrl}/news/${this.new._id}`; // Asegúrate de que apunta al frontend
+  private generateBackendShareableUrl(): string {
+    return `${environments.baseUrl}/news/share/${this.new._id}`; // Asegúrate de que apunta al backend
   }
 
   shareOnWhatsApp(event: Event): void {
     event.stopPropagation();
-    const url = encodeURIComponent(this.generateShareableUrl());
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     window.open(`https://wa.me/?text=${url}`, '_blank');
   }
 
   shareOnTwitter(event: Event): void {
     event.stopPropagation();
-    const url = encodeURIComponent(this.generateShareableUrl());
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     const text = encodeURIComponent(this.new.title);
     window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
   }
 
   shareOnTelegram(event: Event): void {
     event.stopPropagation();
-    const url = encodeURIComponent(this.generateShareableUrl());
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     const text = encodeURIComponent(this.new.title);
     window.open(`https://t.me/share/url?url=${url}&text=${text}`, '_blank');
   }
 
   shareOnFacebook(event: Event): void {
     event.stopPropagation();
-    const url = encodeURIComponent(this.generateShareableUrl());
+    const url = encodeURIComponent(this.generateBackendShareableUrl());
     window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
   }
 
   copyLink(event: Event): void {
     event.stopPropagation();
-    const url = this.generateShareableUrl();
+    const url = this.generateBackendShareableUrl();
     navigator.clipboard.writeText(url).then(() => {
       this.snackBar.open('Enlace copiado al portapapeles', 'Cerrar', { duration: 3000 });
     }).catch(err => {
