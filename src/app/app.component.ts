@@ -2,7 +2,6 @@ import { Component, computed, effect, inject, OnInit } from '@angular/core';
 import { AuthService } from './auth/services/auth.service';
 import { AuthStatus } from './auth/interfaces';
 import { Router } from '@angular/router';
-import { VisitsService } from './visits.service';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,6 @@ export class AppComponent implements OnInit {
 
   private authService = inject(AuthService);
   private router = inject(Router);
-  private visitsService = inject(VisitsService);
 
   // Colores del spinner
   private colors = ['#FFC400', '#C60B1E'];
@@ -44,13 +42,11 @@ export class AppComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.visitsService.incrementVisits();
-
+    
     setInterval(() => {
       if (this.isLoading) {
         this.spinnerColor = this.spinnerColor === this.colors[0] ? this.colors[1] : this.colors[0];
       }
     }, 500);
   }
-
 }
