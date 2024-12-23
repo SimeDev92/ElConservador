@@ -129,10 +129,6 @@ export class DashboardLayoutComponent implements OnInit {
     window.open('mailto:elconservador.colaborators@noticias.com');
   }
 
-  openCentinela() {
-    window.open('https://t.me/Centinela_ElConservador_bot');
-  }
-
   loadActiveCollaborations() {
     const userId = this.user()?._id;
     if (userId) {

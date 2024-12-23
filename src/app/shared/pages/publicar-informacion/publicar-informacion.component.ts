@@ -30,5 +30,5 @@ export class PublicarInformacionComponent {
     );
   }
   contactEmail = environments.contactEmail;
-  centinelaBotUrl = environments.centinelaBotUrl;
+  
 }

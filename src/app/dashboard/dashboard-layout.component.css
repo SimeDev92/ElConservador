@@ -43,7 +43,7 @@
   padding-bottom: 0.5rem;
 }
 
-.donation-btn, .custom-warn-button, .centinela-btn, .email-btn, .info-btn, .manage-subscription-btn, .publish-btn {
+.donation-btn, .custom-warn-button, .email-btn, .info-btn, .manage-subscription-btn, .publish-btn {
   padding: 12px 30px;
   font-size: 1.1rem;
   border-radius: 25px;
@@ -76,16 +76,6 @@
   transform: scale(1.03);
 }
 
-.centinela-btn {
-  font-size: 0.9rem;
-  padding: 10px, 15px;
-  background-color: #FFC400;
-  color: black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .email-btn {
   background-color: #0066CC;
   color: white;
@@ -96,7 +86,7 @@
   color: white;
 }
 
-.centinela-btn:hover, .email-btn:hover, .info-btn:hover {
+.email-btn:hover, .info-btn:hover {
   transform: scale(1.03);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -194,10 +184,6 @@ mat-list-item:hover {
   flex-grow: 1;
 }
 @media (max-width: 768px) {
-  .centinela-btn {
-    font-size: 0.8rem;
-    padding: 8px 12px;
-  }
 
   .icon-star mat-icon {
     font-size: 18px;
@@ -205,10 +191,6 @@ mat-list-item:hover {
 }
 
 @media (max-width: 480px) {
-  .centinela-btn {
-    font-size: 0.7rem;
-    padding: 6px 10px;
-  }
 
   .icon-star mat-icon {
     font-size: 16px;

@@ -9,9 +9,7 @@ export const environments = {
   twitterUrl: 'https://x.com/Conservador24h',
   telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8',
 
-
   contactEmail: 'info@elconservador.com',
-  centinelaBotUrl: 'https://t.me/Centinela_ElConservador_bot'
 }
 
 
