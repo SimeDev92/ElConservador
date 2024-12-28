@@ -5,7 +5,7 @@ export const environments = {
   baseUrl: 'https://fit-rebe-elconservador-d0c1be93.koyeb.app',
   production: false,
   useTestProducts: true,
-  facebookUrl: 'https://www.facebook.com/profile.php?id=61567155161620',
+  facebookUrl: 'https://www.facebook.com/people/El-Conservador-Noticias/61571265990971/',
   twitterUrl: 'https://x.com/Conservador24h',
   telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8',
 

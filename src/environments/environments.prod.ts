@@ -5,7 +5,7 @@ export const environments = {
   baseUrl: 'https://el-conservador-backend-5740091828.us-central1.run.app', // 'https://elconservadorback.onrender.com',
   production: true,
   useTestProducts: true,
-  facebookUrl: 'https://www.facebook.com/profile.php?id=61567155161620',
+  facebookUrl: 'https://www.facebook.com/people/El-Conservador-Noticias/61571265990971/',
   twitterUrl: 'https://x.com/ConservadorTest',
   telegramUrl: 'https://t.me/+V83a31FFvTYxYjY8',
 
