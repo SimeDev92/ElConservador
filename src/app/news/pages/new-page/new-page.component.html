@@ -16,7 +16,8 @@
             <mat-icon>category</mat-icon>
             <span class="category">{{ newsItem.category | categoryTranslate }}</span>
           </div>
-          <p class="news-content">{{ newsItem.content }}</p>
+          <p class="news-content" [innerHTML]="newsItem.content | formatText"></p>
+
           <div class="news-tags">
             <span *ngFor="let tag of newsItem.tags" class="tag">#{{ tag }}</span>
           </div>

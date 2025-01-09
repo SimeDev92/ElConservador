@@ -12,6 +12,8 @@ import { CardComponent } from './components/card/card.component';
 import { NewImagePipe } from './pipes/new-image.pipe';
 import { NewPageComponent } from './pages/new-page/new-page.component';
 import { SharedModule } from '../shared/shared.module';
+import { FormatTextPipe } from './pipes/format-text.pipe';
+import { FormatTextListPipe } from './pipes/formate-text-list.pipe';
 
 
 @NgModule({
@@ -22,13 +24,15 @@ import { SharedModule } from '../shared/shared.module';
     CardComponent,
     // Pipes
     NewImagePipe,
+    FormatTextPipe,
+    FormatTextListPipe
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     NewsRoutingModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
   ],
 
 })

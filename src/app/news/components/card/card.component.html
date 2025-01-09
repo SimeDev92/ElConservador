@@ -8,8 +8,9 @@
   <img mat-card-image [src]="new.imgUrl" [alt]="new.tags" class="news-image">
 
   <mat-card-content class="mt-2 news-content">
-    <p>{{ new.content | slice: 0: 150 }}...</p>
+    <p [innerHTML]="(new.content | slice: 0:150) + '...' | formatTextList"></p>
   </mat-card-content>
+
 
   <div class="news-tags">
     <span class="tag" *ngFor="let tag of new.tags" (click)="searchByTag(tag, $event)">#{{ tag }}</span>
