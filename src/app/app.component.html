@@ -1,6 +1,7 @@
-<h1 *ngIf="!finishedAuthCheck()">loading</h1>
+<app-navbar />
+<div class="max-w-4xl m-auto mt-20 px-2">
+  <app-cookie-banner></app-cookie-banner>
+  <router-outlet />
+</div>
 
-<router-outlet *ngIf="finishedAuthCheck()" />
-<app-footer></app-footer>
-
-
+<app-footer />

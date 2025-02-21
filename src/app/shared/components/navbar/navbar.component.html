@@ -1,0 +1,136 @@
+<nav class="text-white top-0 fixed z-50 w-full shadow-md">
+  <div class="flex w-full h-14">
+    <!-- Sección Roja Izquierda (25% en móvil, 33% en desktop) -->
+    <div class="bg-[#C60B1E] w-[25%] md:w-1/3 h-full flex items-center justify-center relative">
+      <!-- Iconos sociales (solo en desktop) -->
+      <div class="hidden md:flex space-x-6">
+        <a href="https://x.com/Conservador24h" target="_blank"
+          class="transition transform hover:scale-110 duration-300">
+          <img src="../../../../assets/icons/twitter-gray.svg" alt="X Icon" class="w-8 h-8" />
+        </a>
+        <a href="https://www.facebook.com/people/El-Conservador-Noticias/61571265990971/" target="_blank"
+          class="transition transform hover:scale-110 duration-300">
+          <img src="../../../../assets/icons/facebook-gray.svg" alt="Facebook Icon" class="w-8 h-8" />
+        </a>
+        <a href="https://t.me/ElConservadorNoticias" target="_blank"
+          class="transition transform hover:scale-110 duration-300">
+          <img src="../../../../assets/icons/telegram-gray.svg" alt="Telegram Icon" class="w-8 h-8" />
+        </a>
+      </div>
+      <!-- Iconos sociales (solo en móvil) -->
+      <div class="md:hidden flex space-x-2"> <!-- Aumentamos ml-2 a ml-4 para moverlos más a la izquierda -->
+        <a href="https://x.com/Conservador24h" target="_blank" class="transition transform hover:scale-110 duration-300">
+            <img src="../../../../assets/icons/twitter-gray.svg" alt="X Icon" class="w-6 h-6" />
+        </a>
+        <a href="https://www.facebook.com/people/El-Conservador-Noticias/61571265990971/" target="_blank" class="transition transform hover:scale-110 duration-300">
+            <img src="../../../../assets/icons/facebook-gray.svg" alt="Facebook Icon" class="w-6 h-6" />
+        </a>
+        <a href="https://t.me/ElConservadorNoticias" target="_blank" class="transition transform hover:scale-110 duration-300">
+            <img src="../../../../assets/icons/telegram-gray.svg" alt="Telegram Icon" class="w-6 h-6" />
+        </a>
+    </div>
+
+    </div>
+    <!-- Sección Amarilla Central (55% en móvil, 33% en desktop) -->
+    <div class="bg-[#FFC400] w-[55%] md:w-1/3 h-full flex justify-center items-center overflow-visible">
+      <a routerLink="/noticias/pagina/1" (click)="closeMobileMenuOnRouteChange()"
+        class="flex items-center hover:text-blue-300 transition-colors duration-300">
+        <img src="../../../../assets/el_conservador-noticias.ico" alt="Logo" class="h-14 md:h-16 w-auto mr-1 md:mr-2" />
+        <h1 class="text-sm md:text-2xl font-bold text-[#000000] font-playfair whitespace-nowrap">EL CONSERVADOR</h1>
+      </a>
+    </div>
+    <!-- Sección Roja Derecha (20% en móvil, 33% en desktop) -->
+    <div class="bg-[#C60B1E] w-[20%] md:w-1/3 h-full flex items-center justify-end md:justify-center px-2 relative">
+      <!-- Contenedor de Noticias (solo en desktop) -->
+      <!-- Contenedor de Noticias (solo en desktop) -->
+      <div class="hidden md:block relative group">
+        <button (click)="toggleNewsDropdown()"
+          class="text-white font-bold text-xl flex items-center transition-all duration-300 hover:text-[#FFC400]">
+          Noticias
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+            class="w-5 h-5 ml-1 transition-transform duration-300 ease-in-out"
+            [ngClass]="{ 'rotate-180': isNewsDropdownOpen }">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Menú desplegable de subcategorías -->
+        <div *ngIf="isNewsDropdownOpen"
+          class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl z-50 border border-[#C60B1E] p-4">
+
+          <!-- Título del dropdown -->
+          <div class="px-4 py-2 text-lg font-bold text-[#C60B1E] border-b border-[#C60B1E]">
+            Secciones de Noticias
+          </div>
+          <!-- Link principal -->
+          <a routerLink="/noticias/pagina/1" (click)="closeMobileMenuOnRouteChange()"
+            class="block px-4 py-3 text-base font-semibold text-[#C60B1E] hover:bg-[#FFC400] hover:text-white transition-all duration-300 rounded-md">
+            📢 Todas las Noticias
+          </a>
+          <!-- Subcategorías -->
+          <div class="mt-2 space-y-1">
+            <a *ngFor="let category of newsCategories" [routerLink]="['/noticias', category, 'pagina', '1']"
+            (click)="closeMobileMenuOnRouteChange()"
+            class="block px-4 py-2 text-sm font-medium text-gray-800 hover:bg-[#C60B1E] hover:text-white transition-all duration-300 rounded-md">
+           🔹 {{ category | translateCategory }}
+         </a>
+
+          </div>
+
+          <hr class="my-2 border-t border-gray-300" /> <!-- Buscar noticias -->
+          <a routerLink="/noticias/buscar" (click)="closeMobileMenuOnRouteChange()"
+            class="block px-4 py-3 text-base font-semibold text-[#C60B1E] hover:bg-[#FFC400] hover:text-white transition-all duration-300 rounded-md">
+            🔎 Buscar Noticias
+          </a>
+        </div>
+      </div>
+
+      <!-- Botón hamburguesa (visible en móvil) -->
+      <button class="md:hidden text-white focus:outline-none z-[100]" (click)="toggleMobileMenu()">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <!-- Menú Móvil Desplegable -->
+  <div [ngClass]="menuStateClass()"
+    class="md:hidden bg-white absolute top-full left-0 w-full transition-all duration-300 ease-in-out z-[99] shadow-lg">
+    <!-- Enlace a Noticias -->
+    <a routerLink="/noticias/pagina/1" (click)="closeMobileMenuOnRouteChange()"
+      class="block py-4 px-6 text-lg font-semibold text-[#C60B1E] hover:bg-[#FFC400] hover:text-white transition-all duration-300 border-b border-gray-200">
+      Todas las Noticias
+    </a>
+    <!-- Subcategorías -->
+    <div class="py-2">
+      <div *ngFor="let category of newsCategories" class="px-4">
+        <a [routerLink]="['/noticias', category, 'pagina', '1']" (click)="closeMobileMenuOnRouteChange()"
+        class="block py-3 text-base font-medium text-gray-800 hover:bg-[#C60B1E] hover:text-white transition-all duration-300 rounded-md">
+       🔹 {{ category | translateCategory }}
+     </a>
+
+      </div>
+    </div>
+
+    <!-- Buscar Noticias -->
+    <a routerLink="/noticias/buscar" (click)="closeMobileMenuOnRouteChange()"
+      class="block py-4 px-6 text-lg font-semibold text-[#C60B1E] hover:bg-[#FFC400] hover:text-white transition-all duration-300 border-t border-gray-200">
+      🔎 Buscar Noticias
+    </a>
+
+    <!-- Enlaces a redes sociales -->
+    <div class="flex justify-center space-x-6 py-4 bg-gray-100">
+      <a href="https://x.com/Conservador24h" target="_blank" class="transition transform hover:scale-110 duration-300">
+        <img src="../../../../assets/icons/twitter-gray.svg" alt="X Icon" class="w-8 h-8" />
+      </a>
+      <a href="https://www.facebook.com/people/El-Conservador-Noticias/61571265990971/" target="_blank"
+        class="transition transform hover:scale-110 duration-300">
+        <img src="../../../../assets/icons/facebook-gray.svg" alt="Facebook Icon" class="w-8 h-8" />
+      </a>
+      <a href="https://t.me/ElConservadorNoticias" target="_blank"
+        class="transition transform hover:scale-110 duration-300">
+        <img src="../../../../assets/icons/telegram-gray.svg" alt="Telegram Icon" class="w-8 h-8" />
+      </a>
+    </div>
+  </div>
+</nav>

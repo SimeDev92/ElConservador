@@ -1,27 +1,88 @@
-# ElConservadorApp
+# El Conservador Noticias - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.4.
+## 📰 Descripción del Proyecto
 
-## Development server
+El Conservador Noticias es una aplicación web moderna de noticias desarrollada con Angular, diseñada para ofrecer una experiencia de usuario fluida y atractiva.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🚀 Características Principales
 
-## Code scaffolding
+- Listado dinámico de artículos
+- Paginación de noticias
+- Página de artículo individual
+- Diseño responsive con Tailwind CSS
+- Carga perezosa de componentes
+- Gestión de estado con Signals de Angular
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🛠️ Tecnologías Utilizadas
 
-## Build
+- Angular 17+
+- TypeScript
+- Tailwind CSS
+- RxJS
+- Angular Router
+- HttpClient
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 📦 Requisitos Previos
 
-## Running unit tests
+- Node.js (v18+)
+- npm (v9+)
+- Angular CLI
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🔧 Instalación
 
-## Running end-to-end tests
+1. Clonar el repositorio
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. Instalar dependencias
 
-## Further help
+## 🖥️ Scripts de npm
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- `npm start`: Iniciar servidor de desarrollo
+- `npm run build`: Compilar para producción
+- `npm test`: Ejecutar pruebas unitarias
+- `npm run lint`: Ejecutar linter
+
+## 🌐 Configuración de Entorno
+
+Crea archivos de entorno en `src/environments/`:
+- `environment.ts`: Configuración de desarrollo
+- `environment.prod.ts`: Configuración de producción
+
+Ejemplo de configuración:
+
+## 🚢 Despliegue
+
+### Construcción para Producción
+
+### Desplegar en Servidor Estático
+Los archivos compilados en `dist/` pueden desplegarse en cualquier servidor web estático.
+
+## 🤝 Contribución
+
+1. Hacer fork del repositorio
+2. Crear rama de feature (`git checkout -b feature/nueva-caracteristica`)
+3. Commit de cambios (`git commit -m 'Añadir nueva característica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
+5. Abrir un Pull Request
+
+## 📄 Licencia
+
+[Especificar Licencia, por ejemplo MIT]
+
+## 📞 Contacto
+
+- Sitio Web: [URL del sitio]
+- Email: contacto@elconservador.com
+- Twitter: [@ElConservador](https://twitter.com/ElConservador)
+
+## 🔍 Problemas Frecuentes
+
+- Asegúrate de tener la versión correcta de Node.js
+- Verifica la configuración de variables de entorno
+- Consulta la documentación de Angular para dudas específicas
+
+## 🌟 Agradecimientos
+
+- Angular Team
+- Tailwind CSS
+- Comunidad Open Source
+- https://iconos8.es/

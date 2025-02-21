@@ -1,46 +1,21 @@
-import { Component, computed, effect, inject } from '@angular/core';
-import { AuthService } from './auth/services/auth.service';
-import { AuthStatus } from './auth/interfaces';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
+import { FooterComponent } from "./shared/components/footer/footer.component";
+import { CookieBannerComponent } from './cookies/cookie-banner.component';
+
 
 @Component({
   selector: 'app-root',
+  imports: [
+    RouterOutlet,
+    NavbarComponent,
+    FooterComponent,
+    CookieBannerComponent
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'el-conservador-app';
-
-  private  authService =  inject( AuthService );
-  private router = inject( Router)
-  public finishedAuthCheck = computed<boolean>( () => {
-
-    if( this.authService.authStatus() === AuthStatus.cheking ) {
-      return false;
-    }
-
-    return true;
-
-  })
-
-  public authStatusChangedEffect = effect (() => {
-
-    switch( this.authService.authStatus() ){
-
-      case AuthStatus.cheking:
-        return;
-      case AuthStatus.authenticated:
-        this.router.navigateByUrl('/dashboard');
-        return;
-      case AuthStatus.notAuthenticated:
-        this.router.navigateByUrl('/news/list'); // '/news/list' /auth/login'
-        return;
-        case AuthStatus.registered:
-          this.router.navigateByUrl('/auth/login');
-          return;
-    }
-
-
-  })
-
+  title = 'El Conservador - Noticias';
 }

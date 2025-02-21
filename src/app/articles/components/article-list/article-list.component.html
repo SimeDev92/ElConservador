@@ -1,0 +1,11 @@
+<div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+  @for (article of articles(); track article.id) {
+    <article-card [article]="article" />
+  }
+
+  @if (articles().length === 0) {
+    <div class="text-center py-10 col-span-full">
+      No hay Noticias
+    </div>
+  }
+</div>
