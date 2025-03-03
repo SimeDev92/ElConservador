@@ -2,20 +2,32 @@ import { ChangeDetectionStrategy, Component, OnInit, signal, inject } from '@ang
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { tap } from 'rxjs';
 import { Article } from '../../articles/interfaces';
 import { ArticlesService } from '../../articles/services/articles.service';
 import { SpanishDatePipe } from '../../articles/pipes/spanish-date.pipe';
 import { TranslateCategoryPipe } from '../../articles/pipes/translate-category.pipe';
 import { FormatTextPipe } from '../../articles/pipes/format-text.pipe';
+import { MarkdownToHtmlPipe } from "../../articles/pipes/markdow-to-html.pipe";
+import { MarkdownService, provideMarkdown } from 'ngx-markdown';
+
 
 @Component({
   selector: 'article-page',
+  standalone: true,
   imports: [
     CommonModule,
+    HttpClientModule,
     SpanishDatePipe,
     TranslateCategoryPipe,
     FormatTextPipe,
+    MarkdownToHtmlPipe
+  ],
+  providers: [
+    provideMarkdown(),
+    MarkdownService,
+    HttpClient
   ],
   templateUrl: './article-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

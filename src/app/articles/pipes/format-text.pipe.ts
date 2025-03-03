@@ -1,23 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Pipe({
   name: 'formatText',
   standalone: true
 })
 export class FormatTextPipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
-
-  transform(value: string): SafeHtml {
+  transform(value: string): string {
     if (!value) return '';
 
     // Reemplazar '@@' con saltos de línea
-    let formattedText = value.replace(/@@/g, '<br>');
+    let formattedText = value.replace(/@@/g, '\n\n');
 
-    // Reemplazar '$$' con etiquetas de negrita
-    formattedText = formattedText.replace(/\$\$(.*?)\$\$/g, '<strong>$1</strong>');
+    // Reemplazar '$$' con sintaxis de negrita de Markdown
+    formattedText = formattedText.replace(/\$\$(.*?)\$\$/g, '**$1**');
 
-    // Sanitizar el HTML resultante
-    return this.sanitizer.bypassSecurityTrustHtml(formattedText);
+    return formattedText;
   }
 }
