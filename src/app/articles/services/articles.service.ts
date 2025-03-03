@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { map, Observable, catchError, of } from 'rxjs';
+import { map, Observable, catchError, of, tap } from 'rxjs';
 import { Article, ArticleAPIResponse, SimpleArticle } from '../interfaces';
 import { environments } from '../../../environments/environments';
 
@@ -36,18 +36,17 @@ export class ArticlesService {
   }
 
   public loadArticle(slug: string): Observable<Article> {
-    return this.http.get<Article>(`${this.baseUrl}/articles/${slug}`).pipe(
-      map((article) => {
-        this.incrementViews(article._id).subscribe({
-          error: (err) => console.error('Error incrementando visualizaciones', err),
-        });
-        return article;
-      }),
-      catchError((error) => {
-        console.error('Error cargando artículo:', error);
-        throw error; // Lanza el error para que sea manejado por el componente llamante
-      })
-    );
+    return this.http
+      .get<Article>(`${this.baseUrl}/articles/${slug}`)
+      .pipe(
+        tap((article) => {
+          this.http
+            .patch(`${this.baseUrl}/articles/${article._id}/increment-views`, {})
+            .subscribe({
+              error: (err) => console.error('Error incrementando visualizaciones', err),
+            });
+        })
+      );
   }
 
   private incrementViews(articleId: string): Observable<void> {
