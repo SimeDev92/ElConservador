@@ -15,8 +15,9 @@ export class CookieBannerComponent implements OnInit {
   constructor(private cookieConsentService: CookieConsentService) {}
 
   ngOnInit(): void {
-    // Muestra el banner si el usuario no ha dado consentimiento
-    this.showBanner = !this.cookieConsentService.hasConsent();
+    setTimeout(() => {
+      this.showBanner = !this.cookieConsentService.hasConsent();
+    }, 0);
   }
 
   acceptCookies(): void {
