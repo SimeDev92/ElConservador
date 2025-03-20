@@ -3,6 +3,16 @@ import { ArticleCategory } from './articles/interfaces';
 
 export const routes: Routes = [
   {
+    path: 'sitemap.xml',
+    loadComponent: () => import('./pages/empty/empty.component'),
+    pathMatch: 'full',
+  },
+  {
+    path: 'news-sitemap.xml',
+    loadComponent: () => import('./pages/empty/empty.component'),
+    pathMatch: 'full',
+  },
+  {
     path: 'sobre-nosotros',
     loadComponent: () => import('./pages/about/about-page.component'),
   },
