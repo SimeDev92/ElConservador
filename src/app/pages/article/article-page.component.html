@@ -17,11 +17,9 @@
   </div>
 
   <!-- Imagen destacada -->
-  <div
-    class="relative w-full h-0 pb-[56.25%] overflow-hidden rounded-lg shadow-md mb-4 sm:mb-6 bg-gradient-to-br from-blue-100 to-red-100">
-    <div class="absolute inset-0 bg-opacity-10 bg-pattern"></div>
+  <div class="relative w-full h-0 pb-[56.25%] overflow-hidden rounded-lg shadow-md mb-4 sm:mb-6">
     <img [src]="myArticle.imgUrl" [alt]="myArticle.title"
-      class="absolute top-0 left-0 w-full h-full object-contain z-10" />
+    class="absolute top-0 left-0 w-full h-full object-cover" />
   </div>
 <!-- Información adicional: Categoría, Autor y Fecha -->
 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 items-center text-gray-600 text-lg mb-8">

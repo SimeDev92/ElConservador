@@ -2,3 +2,20 @@
 command = "ng build"
 functions = "netlify/functions"
 publish = "dist/el-conservador-frontend/browser"
+
+[[redirects]]
+from = "/sitemap.xml"
+to = "https://el-conservador-noticias-backend.vercel.app/sitemap/sitemap.xml"
+status = 200
+force = true
+
+[[redirects]]
+from = "/news-sitemap.xml"
+to = "https://el-conservador-noticias-backend.vercel.app/sitemap/news-sitemap.xml"
+status = 200
+force = true
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
