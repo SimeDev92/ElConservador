@@ -63,13 +63,20 @@ export default class ArticlePageComponent implements OnInit {
           this.meta.updateTag({ property: 'og:image', content: imageUrl });
           this.meta.updateTag({ property: 'og:url', content: pageUrl });
           this.meta.updateTag({ property: 'og:type', content: 'article' });
+          
+          // Eliminar metaetiquetas de Twitter existentes
+          this.meta.removeTag('name="twitter:card"');
+          this.meta.removeTag('name="twitter:title"');
+          this.meta.removeTag('name="twitter:description"');
+          this.meta.removeTag('name="twitter:image"');
+          this.meta.removeTag('name="twitter:site"');
 
-          // Twitter Card
+          // Actualizar metaetiquetas de Twitter
           this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-          this.meta.updateTag({ name: 'twitter:site', content: '@Conservador24h' });
           this.meta.updateTag({ name: 'twitter:title', content: pageTitle });
           this.meta.updateTag({ name: 'twitter:description', content: pageDescription });
           this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+          this.meta.updateTag({ name: 'twitter:site', content: '@Conservador24h' });
 
           // Optional extra metadata
           this.meta.updateTag({ name: 'article:published_time', content: new Date(article.date).toISOString() });
