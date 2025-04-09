@@ -43,21 +43,35 @@ export default class ArticlePageComponent implements OnInit {
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('slug');
     if (!slug) return;
+
     this.articlesService.loadArticle(slug)
       .pipe(
         tap((article: Article) => {
           const pageTitle = article.title;
           const pageDescription = article.content.substring(0, 160) + '...';
+          const pageUrl = `https://elconservadornoticias.com/noticias/${article.slug}`;
+          const imageUrl = article.imgUrl;
 
           this.title.setTitle(pageTitle);
 
+          // HTML meta
           this.meta.updateTag({ name: 'description', content: pageDescription });
+
+          // Open Graph
           this.meta.updateTag({ property: 'og:title', content: pageTitle });
           this.meta.updateTag({ property: 'og:description', content: pageDescription });
-          this.meta.updateTag({ property: 'og:image', content: article.imgUrl });
-          this.meta.updateTag({ property: 'og:url', content: `https://elconservadornoticias.com/noticias/${article.slug}` });
+          this.meta.updateTag({ property: 'og:image', content: imageUrl });
+          this.meta.updateTag({ property: 'og:url', content: pageUrl });
           this.meta.updateTag({ property: 'og:type', content: 'article' });
 
+          // Twitter Card
+          this.meta.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
+          this.meta.updateTag({ name: 'twitter:site', content: '@Conservador24h' });
+          this.meta.updateTag({ name: 'twitter:title', content: pageTitle });
+          this.meta.updateTag({ name: 'twitter:description', content: pageDescription });
+          this.meta.updateTag({ name: 'twitter:image', content: imageUrl });
+
+          // Optional extra metadata
           this.meta.updateTag({ name: 'article:published_time', content: new Date(article.date).toISOString() });
           this.meta.updateTag({ name: 'article:section', content: article.category });
 
