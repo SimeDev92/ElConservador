@@ -12,7 +12,6 @@ import { FormatTextPipe } from '../../articles/pipes/format-text.pipe';
 import { MarkdownToHtmlPipe } from "../../articles/pipes/markdow-to-html.pipe";
 import { MarkdownService, provideMarkdown } from 'ngx-markdown';
 
-
 @Component({
   selector: 'article-page',
   standalone: true,
@@ -63,7 +62,7 @@ export default class ArticlePageComponent implements OnInit {
           this.meta.updateTag({ property: 'og:image', content: imageUrl });
           this.meta.updateTag({ property: 'og:url', content: pageUrl });
           this.meta.updateTag({ property: 'og:type', content: 'article' });
-          
+
           // Eliminar metaetiquetas de Twitter existentes
           this.meta.removeTag('name="twitter:card"');
           this.meta.removeTag('name="twitter:title"');

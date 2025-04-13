@@ -5,7 +5,6 @@ import { FooterComponent } from "./shared/components/footer/footer.component";
 import { CookieBannerComponent } from './cookies/cookie-banner.component';
 import { isPlatformBrowser, ViewportScroller } from '@angular/common';
 
-
 @Component({
   selector: 'app-root',
   imports: [
@@ -35,5 +34,4 @@ export class AppComponent {
       });
     }
   }
-
 }
